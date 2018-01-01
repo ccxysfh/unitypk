@@ -25,6 +25,12 @@ import tensorflow as tf
 
 data_dir_path = "/data/datasets/frames_temp"
 
+def reset_graph(seed=42):
+    tf.reset_default_graph()
+    tf.set_random_seed(seed)
+    np.random.seed(seed)
+reset_graph()
+
 def sample_by_filename(filename):
     # selected pirticle
 
@@ -77,34 +83,17 @@ def sample_by_filename(filename):
 
 from tensorflow.contrib.layers import fully_connected
 def net_structure(X_train=None,y_train=None,X_valid=None,y_valid=None,X_test=None,y_test=None):
-    n_inputs = 10 * 100
-    n_outputs = 5
-
-    X = tf.placeholder(tf.float32, shape=(None, n_inputs), name="X")
-    y = tf.placeholder(tf.int64, shape=(None), name="y")
-
+    n_inputs = X_train.shape[1]
+    n_outputs = y_train.shape[1]
     he_init = tf.contrib.layers.variance_scaling_initializer()
 
-    def dnn(inputs, n_hidden_layers=5, n_neurons=100, name=None, activation=tf.nn.elu, initializer=he_init):
+    def dnn(inputs, n_hidden_layers=5, n_neurons=15, name=None, activation=tf.nn.elu, initializer=he_init):
         with tf.name_scope("dnn"):
             for layer in range(n_hidden_layers):
                 inputs = tf.layers.dense(inputs, n_neurons, activation=activation, \
                                          kernel_initializer=initializer, name="hidden%d" % (layer + 1))
         return inputs
 
-    dnn_outputs = dnn(X)
-    logits = fully_connected(dnn_outputs, n_outputs, scope="outputs", activation_fn=None)
-
-    """
-    对于损失函数的定义尚有疑虑，再行考虑,目前姑且先使用均方差吧
-    """
-    with tf.name_scope("train"):
-        loss = tf.reduce_mean(np.multiply(logits-y, logits-y))
-        optimizer = tf.train.AdamOptimizer()
-        training_op = optimizer.minimize(loss)
-    """
-    添加summary，以调用tensorboard进行检测
-    """
     from datetime import datetime
 
     def log_dir(prefix=""):
@@ -114,15 +103,33 @@ def net_structure(X_train=None,y_train=None,X_valid=None,y_valid=None,X_test=Non
             prefix += "-"
         name = prefix + "run-" + now
         return "{}/{}/".format(root_logdir, name)
+    graph = tf.Graph()
+    with graph.as_default():
+        X = tf.placeholder(tf.float32, shape=(None, n_inputs), name="X")
+        y = tf.placeholder(tf.float32, shape=(None), name="y")
+        dnn_outputs = dnn(X)
+        logits = fully_connected(dnn_outputs, n_outputs, scope="outputs", activation_fn=None)
 
-    logdir = log_dir("fluids")
-    with tf.name_scope("summary"):
-        loss_summary = tf.summary.scalar("log_loss", loss)
-        file_writer = tf.summary.FileWriter(logdir, tf.get_default_graph())
+        """
+        对于损失函数的定义尚有疑虑，再行考虑,目前姑且先使用均方差吧
+        """
+        with tf.name_scope("train"):
+            loss = tf.reduce_mean(np.multiply(logits-y, logits-y))
+            optimizer = tf.train.AdamOptimizer()
+            training_op = optimizer.minimize(loss)
+        """
+        添加summary，以调用tensorboard进行检测
+        """
 
-    init = tf.global_variables_initializer()
-    saver = tf.train.Saver()
 
+        logdir = log_dir("fluids")
+        with tf.name_scope("summary"):
+            loss_summary = tf.summary.scalar("log_loss", loss)
+            file_writer = tf.summary.FileWriter(logdir, tf.get_default_graph())
+
+        init = tf.global_variables_initializer()
+        saver = tf.train.Saver()
+    print("Build graph end.")
     n_epochs = 1000
     batch_size = 20
 
@@ -143,7 +150,7 @@ def net_structure(X_train=None,y_train=None,X_valid=None,y_valid=None,X_test=Non
     # X_test = ""
     # y_test = ""
 
-    graph  = tf.Graph()
+
     session = tf.Session(graph=graph)
 
     def get_model_params(session, graph):
@@ -165,22 +172,23 @@ def net_structure(X_train=None,y_train=None,X_valid=None,y_valid=None,X_test=Non
         if not os.path.exists(checkpoint_path):
             start_epoch = 0
             sess.run(init)
+            print("start epoch 0")
         else:
             with open(checkpoint_epoch_path, 'rb') as f:
                 start_epoch = int(f.read())
             print("Training was interrupted. Continuing at epoch", start_epoch)
             saver.restore(sess, final_model_path)
-        batch_time = 10
         for epoch in range(start_epoch, n_epochs):
-            for iteration in range(batch_time):
-                X_batch, y_batch = X_train, y_train
+            rnd_idx = np.random.permutation(len(X_train))
+            for rnd_indices in np.array_split(rnd_idx, len(X_train) // batch_size):
+                X_batch, y_batch = X_train[rnd_indices], y_train[rnd_indices]
                 sess.run(training_op, feed_dict={X: X_batch, y: y_batch})
 
             loss_evl, summary_str = sess.run([loss, loss_summary], feed_dict={X: X_test, y: y_test})
             file_writer.add_summary(summary_str, epoch)
             print(epoch, "loss:", loss_evl)
             if epoch % 5 == 0:
-                with open(checkpoint_epoch_path, 'rb') as f:
+                with open(checkpoint_epoch_path, 'wb') as f:
                     saver.save(sess, checkpoint_path)
                     f.write(b'%d' % (epoch + 1))
             # early stop
