@@ -76,7 +76,7 @@ def sample_by_filename(filename):
     f.close()
 
 from tensorflow.contrib.layers import fully_connected
-def net_structure():
+def net_structure(X_train=None,y_train=None,X_valid=None,y_valid=None,X_test=None,y_test=None):
     n_inputs = 10 * 100
     n_outputs = 5
 
