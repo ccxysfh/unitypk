@@ -136,12 +136,12 @@ def net_structure(X_train=None,y_train=None,X_valid=None,y_valid=None,X_test=Non
     checkpoint_epoch_path = checkpoint_path + ".epoch"
     final_model_path = "./my_fluid_model"
 
-    X_train = ""
-    y_train = ""
-    X_valid = ""
-    y_valid = ""
-    X_test = ""
-    y_test = ""
+    # X_train = ""
+    # y_train = ""
+    # X_valid = ""
+    # y_valid = ""
+    # X_test = ""
+    # y_test = ""
 
     graph  = tf.Graph()
     session = tf.Session(graph=graph)
