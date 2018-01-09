@@ -23,7 +23,7 @@ import os
 import numpy as np
 import tensorflow as tf
 
-data_dir_path = "/data/datasets/frames_temp"
+data_dir_path = "/data/datasets/simulation_data/frames"
 
 def reset_graph(seed=42):
     tf.reset_default_graph()
@@ -85,14 +85,7 @@ from tensorflow.contrib.layers import fully_connected
 def net_structure(X_train=None,y_train=None,X_valid=None,y_valid=None,X_test=None,y_test=None):
     n_inputs = X_train.shape[1]
     n_outputs = y_train.shape[1]
-    he_init = tf.contrib.layers.variance_scaling_initializer()
 
-    def dnn(inputs, n_hidden_layers=5, n_neurons=15, name=None, activation=tf.nn.elu, initializer=he_init):
-        with tf.name_scope("dnn"):
-            for layer in range(n_hidden_layers):
-                inputs = tf.layers.dense(inputs, n_neurons, activation=activation, \
-                                         kernel_initializer=initializer, name="hidden%d" % (layer + 1))
-        return inputs
 
     from datetime import datetime
 
@@ -107,6 +100,16 @@ def net_structure(X_train=None,y_train=None,X_valid=None,y_valid=None,X_test=Non
     with graph.as_default():
         X = tf.placeholder(tf.float32, shape=(None, n_inputs), name="X")
         y = tf.placeholder(tf.float32, shape=(None), name="y")
+
+        he_init = tf.contrib.layers.variance_scaling_initializer()
+        # TODO 修改隐藏层及每层神经元个数
+        def dnn(inputs, n_hidden_layers=5, n_neurons=15, name=None, activation=tf.nn.elu, initializer=he_init):
+            with tf.name_scope("dnn"):
+                for layer in range(n_hidden_layers):
+                    inputs = tf.layers.dense(inputs, n_neurons, activation=activation, \
+                                             kernel_initializer=initializer, name="hidden%d" % (layer + 1))
+            return inputs
+
         dnn_outputs = dnn(X)
         logits = fully_connected(dnn_outputs, n_outputs, scope="outputs", activation_fn=None)
 
