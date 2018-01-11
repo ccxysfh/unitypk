@@ -29,7 +29,7 @@ def reset_graph(seed=42):
     tf.reset_default_graph()
     tf.set_random_seed(seed)
     np.random.seed(seed)
-reset_graph()
+# reset_graph()
 
 def sample_by_filename(filename):
     # selected pirticle
@@ -265,5 +265,49 @@ def show_tensorboard(logdir):
                 summary_writer.add_summary(summary_str, total_step)
     return
 
+
+
+class Box():
+
+    def __init__(self,xmin, xmax, ymin, ymax, zmin, zmax):
+        self.xmin = xmin
+        self.xmax = xmax
+        self.ymin = ymin
+        self.ymax = ymax
+        self.zmin = zmin
+        self.zmax = zmax
+
+
+    def is_member(self, x, y, z):
+        if x <= self.xmax and x >= self.xmin:
+            if y <= self.ymax and y >= self.ymin:
+                if z <= self.zmax and z >= self.zmin:
+                    return True
+        return False
+
+class IntegralFeature():
+
+    def __init__(self, particles):
+        self.particles = particles
+        return
+
+    def integral_volumes(self, x, y, z):
+        sum = 0
+        zero_box = Box(0, x, 0, y, 0, z)
+        for particle in self.particles: # 此处传入的应当为nX6的张量
+            if zero_box.is_member(tuple(particle.position)):
+                sum += particle.f
+        return sum
+
+    def integral_feature(self, box):
+
+        return self.integral_volumes(box.xmax, box.ymax, box.zmax) - self.integral_volumes(box.xmin, box.ymax,) \
+                -self.integral_volumes(box.xmax, box.yin, box.zmax) - self.integral_volumes(box.xmax, box.ymax, box.zmin)\
+                + self.integral_volumes(box.xmin, box.ymin, box.zmax) + self.integral_volumes(box.xmin, box.ymax, box.zmin)\
+                + self.integral_volumes(box.xmax, box.ymin, box.zmin) - self.integral_volumes(box.xmin, box.ymin, box.zmin)
+
 if __name__ == '__main__':
-    pass
+    box = Box(0, 3 , 0 , 3, 0, 3)
+    print(box.is_member(1,1,4))
+
+
