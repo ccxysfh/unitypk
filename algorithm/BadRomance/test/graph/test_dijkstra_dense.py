@@ -3,16 +3,17 @@
 
 """
 @author: changxin
-@mail: PyCharm
-@file: test_dijkstra.py
-@time: 2018/5/14 01:17
+@mail: chengcx1019@gmail.com
+@file: test_dijkstra_dense.py
+@time: 2018/5/14 10:56
 """
 import unittest
-from basic.dijkstra import Dijkstra
-from basic.graph import Graph
+from basic.graph.dijkstra_dense import DijkstraDense
+from basic.graph.graph import Graph
 
-class TestDijkstra(unittest.TestCase):
-    
+
+class TestDijkstraDense(unittest.TestCase):
+
     def tearDown(self):
         self.dijkstra = None
         self.graph = None
@@ -37,10 +38,9 @@ class TestDijkstra(unittest.TestCase):
         for edge in edges:
             self.graph.add_edge(edge[0], edge[1], weight=edge[2])
 
-        self.dijkstra = Dijkstra(self.graph )
+        self.dijkstra = DijkstraDense(self.graph)
 
-
-    def test_dijkstra(self):
+    def test_dijkstra_dense(self):
         if self.option == 1:
             self.dijkstra.dijkstra(0)
             self.assertEqual(self.dijkstra.dist[3], 10)
@@ -50,7 +50,7 @@ class TestDijkstra(unittest.TestCase):
             self.assertEqual(self.dijkstra.dist[2], 5)
             self.assertEqual(self.dijkstra.full_path(2), [0, 1, 2])
         elif self.option == 2:
-            self.dijkstra.dijkstra(1)
+            self.dijkstra.dijkstra_dense(1)
             self.assertEqual(self.dijkstra.dist[1], 0)
             self.assertEqual(self.dijkstra.dist[2], 7)
             self.assertEqual(self.dijkstra.dist[3], 9)
@@ -63,9 +63,6 @@ class TestDijkstra(unittest.TestCase):
             self.assertEqual(self.dijkstra.full_path(4), [1, 3, 4])
             self.assertEqual(self.dijkstra.full_path(5), [1, 3, 6, 5])
             self.assertEqual(self.dijkstra.full_path(6), [1, 3, 6])
-    
-
-
 
 if __name__ == '__main__':
     pass

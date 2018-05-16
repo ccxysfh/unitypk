@@ -8,8 +8,8 @@
 @time: 2018/5/13 17:34
 """
 import unittest
-from basic.graph_dfs import GraphDfs
-from basic.graph import Node
+from basic.graph.graph_dfs import GraphDfs
+
 
 class TestGraphDfs(unittest.TestCase):
 

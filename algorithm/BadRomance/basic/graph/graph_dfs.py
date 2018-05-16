@@ -7,7 +7,7 @@
 @file: graph_dfs.py
 @time: 2018/5/13 16:12
 """
-from basic.graph import Graph, State, Node
+from basic.graph.graph import Graph, State, Node
 
 class GraphDfs(Graph):
 

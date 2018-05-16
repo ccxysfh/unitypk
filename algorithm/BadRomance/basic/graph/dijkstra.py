@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
+# Time: O((V+E)logv) for min-heap-based depends on which priority queue you used
 """
 @author: changxin
 @mail: PyCharm
@@ -9,10 +10,14 @@
 """
 import sys
 
-from basic.graph import Graph
-from basic.priority_queue import PriorityQueue, PriorityQueueNode
+from basic.array.priority_queue import PriorityQueue, PriorityQueueNode
 
-# 有向有权图, 距离才是优先队列的key值，是优先级的度量
+"""
+singleSourceShortest
+有向有权图, 距离才是优先队列的key值，是优先级的度量
+优势
+劣势：不能够应用有负权的边
+"""
 class Dijkstra(object):
     
     def __init__(self, graph):
@@ -51,6 +56,7 @@ class Dijkstra(object):
         # Start at the end node, walk the previous dict to get to the start node
         if end_node_key:
             return self.full_path(end_node_key)
+
 
     def full_path(self, end_node_key):
         reslut = []

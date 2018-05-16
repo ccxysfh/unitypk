@@ -10,7 +10,7 @@
 from collections import deque
 import sys
 
-from basic.graph import Graph, Node, State
+from basic.graph.graph import Graph, Node, State
 
 class GraphBfs(Graph):
 

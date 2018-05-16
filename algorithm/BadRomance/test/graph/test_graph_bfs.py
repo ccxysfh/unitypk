@@ -8,7 +8,7 @@
 @time: 2018/5/13 21:16
 """
 import unittest
-from basic.graph_bfs import GraphBfs
+from basic.graph.graph_bfs import GraphBfs
 
 class TestGraphBfs(unittest.TestCase):
 

@@ -8,7 +8,7 @@
 @time: 2018/5/14 00:10
 """
 import  unittest
-from basic.priority_queue import PriorityQueue, PriorityQueueNode
+from basic.array.priority_queue import PriorityQueue, PriorityQueueNode
 
 class TestPriorityQueue(unittest.TestCase):
 

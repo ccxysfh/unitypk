@@ -8,14 +8,15 @@
 """
 import unittest
 
-from basic.graph import Graph
+from basic.graph.graph import Graph
 class TestGraph(unittest.TestCase):
+
+    def tearDown(self):
+        self.graph = None
 
     def setUp(self):
         self.graph = Graph()
 
-    def tearDown(self):
-        self.graph = None
 
     def test_graph(self):
         graph = Graph()
@@ -32,10 +33,6 @@ class TestGraph(unittest.TestCase):
         graph.add_edge(5, 2, weight=9)
 
         self.assertEqual(graph.nodes[0].adj_weights[graph.nodes[1].key], 5)
-
-    
-
-
 
 if __name__ == '__main__':
     unittest.main()
