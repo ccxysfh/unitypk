@@ -7,6 +7,9 @@
 @file: lca_tree.py
 @time: 2018/5/20 00:17
 """
+
+"""Find the lowest common ancestor of two nodes in a binary tree"""
+
 class Node(object):
     
     def __init__(self, key, left=None, right=None):
