@@ -10,11 +10,12 @@
 import unittest
 
 from basic.tree.min_bst import MinBst
+from basic.tree.binary_search_tree import BinaryTreeNode
 from basic.tree.binary_search_tree import Traversal
 from basic.utils.results import Results
 
 
-class TestBinarySearchTreeBfs(unittest.TestCase):
+class TestMinBst(unittest.TestCase):
 
     def tearDown(self):
         self.bst = None
@@ -27,5 +28,7 @@ class TestBinarySearchTreeBfs(unittest.TestCase):
     def test_bst(self):
         node_datas = [1, 2, 3, 5, 6, 7, 8, 9]
         self.assertEqual(self.bst.min_bst(node_datas), 5)
+
+
 if __name__ == '__main__':
     pass

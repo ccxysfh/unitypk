@@ -10,7 +10,7 @@
 """
 import sys
 
-from basic.array.priority_queue import PriorityQueue, PriorityQueueNode
+from basic.array_string.priority_queue import PriorityQueue, PriorityQueueNode
 
 """
 singleSourceShortest

@@ -29,6 +29,10 @@ class TestUberInterview(unittest.TestCase):
         rules = ["A N B","C N B"]
         self.assertEqual(validate(rules), True)
 
+    def test4(self):
+        rules = ["A WN B","C ES B", "C ES A"]
+        self.assertEqual(validate(rules), True)
+
     def test_final(self):
         rules = ['A N B', 'B N C', 'C N A']
         self.assertEqual(validate(rules), False)

@@ -13,7 +13,7 @@
 import sys
 
 from basic.graph.graph import Graph
-from basic.array.priority_queue import PriorityQueue, PriorityQueueNode
+from basic.array_string.priority_queue import PriorityQueue, PriorityQueueNode
 
 
 class MSTPrim(object):

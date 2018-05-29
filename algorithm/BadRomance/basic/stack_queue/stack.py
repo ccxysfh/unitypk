@@ -7,14 +7,13 @@
 @file: stack.py
 @time: 2018/5/26 20:53
 """
-"""
-Implement a stack with push, pop, peek, and is_empty methods using a linked list.
-"""
-
 from basic.linked_list.linked_list import LinkedList, LinkedListNode
 
+
 class Stack(LinkedList):
-    
+    """
+    Implement a stack with push, pop, peek, and is_empty methods using a linked list.
+    """
     def __init__(self, top=None):
         super(Stack, self).__init__(top)
 
@@ -36,7 +35,5 @@ class Stack(LinkedList):
         return self.peek() is None
 
         
-    
-
 if __name__ == '__main__':
     pass

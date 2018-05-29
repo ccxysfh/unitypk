@@ -8,7 +8,7 @@
 @time: 2018/5/26 21:04
 """
 """
-Implement n stacks using a single array
+Implement n stacks using a single array_string
 
 """
 

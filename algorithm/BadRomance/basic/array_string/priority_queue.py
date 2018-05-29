@@ -7,11 +7,12 @@
 @file: priority_queue.py
 @time: 2018/5/13 23:55
 """
+import sys
+
 """
-a priority queue backed by an array.
+a priority queue backed by an array_string.
 """
 
-import sys
 
 class PriorityQueueNode(object):
 
@@ -45,7 +46,6 @@ class PriorityQueue(object):
                 mini_index = index
         return self.array.pop(mini_index)
 
-
     def decrease_key(self, obj, new_key):
         for node in self.array:
             if node.obj is obj:
@@ -53,7 +53,6 @@ class PriorityQueue(object):
                 return node
         return None
     
-
 
 if __name__ == '__main__':
     pass

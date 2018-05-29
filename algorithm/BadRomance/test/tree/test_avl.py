@@ -10,7 +10,7 @@
 import unittest
 
 from basic.tree.avl import AVLTree
-from avl_nutshell import BinaryTree
+from basic.tree.avl import AVLTree
 from basic.utils.results import Results
 
 class TestBinarySearchTree(unittest.TestCase):
@@ -25,7 +25,7 @@ class TestBinarySearchTree(unittest.TestCase):
         if self.option == 1:
             self.avl = AVLTree()
         elif self.option ==2:
-            self.avl = BinaryTree()
+            self.avl = AVLTree()
         self.results = Results()
 
     def test_avl(self):
@@ -74,9 +74,6 @@ class TestBinarySearchTree(unittest.TestCase):
             self.avl.add(9)
             print(list(self.avl.root.inorder()))
             self.assertEqual(self.avl.root.value, 5)
-
-
-
 
 
 if __name__ == '__main__':

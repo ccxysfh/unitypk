@@ -13,12 +13,12 @@ from basic.tree.validate_bst import ValidateBst
 from basic.tree.binary_search_tree import BinaryTreeNode as Node, Traversal
 from basic.utils.results import Results
 
+
 class TestBinarySearchTreeBfs(unittest.TestCase):
 
     def tearDown(self):
         self.bst = None
         self.results = None
-
 
     def setUp(self):
         self.bst = ValidateBst()
@@ -43,6 +43,7 @@ class TestBinarySearchTreeBfs(unittest.TestCase):
         bst.root.right = right
         bst.root.left.right = invalid
         self.assertEqual(bst.validate_bst(), False)
+
 
 if __name__ == '__main__':
     pass

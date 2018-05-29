@@ -11,11 +11,12 @@ import unittest
 
 from basic.tree.lca_tree import BinaryTree, Node
 
+
+
 class TestLCABinaryTree(unittest.TestCase):
 
     def tearDown(self):
         self.bt = None
-
 
     def setUp(self):
         self.bt = BinaryTree()
@@ -50,7 +51,6 @@ class TestLCABinaryTree(unittest.TestCase):
         self.assertEqual(binary_tree.lca(root, node12, node40), node10)
         self.assertEqual(binary_tree.lca(root, node9, node20), node9)
         self.assertEqual(binary_tree.lca(root, node3, node5), node5)
-
 
 
 if __name__ == '__main__':

@@ -7,8 +7,9 @@
 @file: test_priority_queue.py
 @time: 2018/5/14 00:10
 """
-import  unittest
-from basic.array.priority_queue import PriorityQueue, PriorityQueueNode
+import unittest
+from basic.array_string.priority_queue import PriorityQueue, PriorityQueueNode
+
 
 class TestPriorityQueue(unittest.TestCase):
 
@@ -17,8 +18,6 @@ class TestPriorityQueue(unittest.TestCase):
 
     def setUp(self):
         self.priority_queue = PriorityQueue()
-
-
 
     def test_priority_queue(self):
         self.assertEqual(self.priority_queue.extract_min(), None)
@@ -34,8 +33,6 @@ class TestPriorityQueue(unittest.TestCase):
         while self.priority_queue.array:
             mins.append(self.priority_queue.extract_min().key)
         self.assertEqual(mins, [2, 5, 15, 19, 22, 40])
-
-    
 
 
 if __name__ == '__main__':

@@ -7,11 +7,11 @@
 @file: linked_list_ palindrome.py
 @time: 2018/5/26 19:43
 """
-"""Determine if a linked list is a palindrome"""
 from basic.linked_list.linked_list import LinkedList
 
-class LnkedListPalindrome(LinkedList):
 
+class LnkedListPalindrome(LinkedList):
+    """Determine if a linked list is a palindrome"""
     def __init__(self):
         super(LnkedListPalindrome, self).__init__()
 
@@ -35,6 +35,7 @@ class LnkedListPalindrome(LinkedList):
             curr = curr.next
             curr_re = curr_re.next
         return True
+
 
 if __name__ == '__main__':
     pass

@@ -14,9 +14,10 @@ binary heap is one of implementations;
 min heap (the key of parent node is smaller than any child node) max heap on the contrary;
 
 not all trees are binary search tree
-a array can represent a tree, wierd, 2*index+1 for left child, 2*index+2 for right child, to get parent take:(index-1)/2;
+a array_string can represent a tree, wierd, 2*index+1 for left child, 2*index+2 for right child, to get parent take:(index-1)/2;
 """
 from basic.tree.bst_bfs import BinarySearchTreeBfs
+
 
 class MinHeap(object):
     
@@ -24,7 +25,7 @@ class MinHeap(object):
         self.array = []
 
     def __len__(self):
-        return  len(self.array)
+        return len(self.array)
 
     def insert(self, key):
         if key is None:
@@ -57,7 +58,7 @@ class MinHeap(object):
     def _bubble_up(self, index):
         if index == 0:
             return
-        parent = (index -1) // 2
+        parent = (index - 1) // 2
         if self.array[parent] < self.array[index]:
             return
         else:

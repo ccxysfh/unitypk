@@ -12,19 +12,18 @@
 bst
 """
 
+
 class BinaryTreeNode(object):
     
     def __init__(self, data):
         self.data = data
         self.left = None
-        self.right =None
+        self.right = None
         self.parent = None
 
     def __repr__(self):
         return str(self.data)
         
-    
-
 
 class BinarySearchTree(object):
     
@@ -42,7 +41,7 @@ class BinarySearchTree(object):
 
     def _insert(self, node, data):
         if node is None:
-            return  BinarySearchTree(data)
+            return BinarySearchTree(data)
         if data < node.data:
             if node.left is None:
                 node.left = BinaryTreeNode(data)
@@ -58,7 +57,9 @@ class BinarySearchTree(object):
             else:
                 return self._insert(node.right, data)
 
-# 3(in\pre\post_order) dfs of tree
+#  3(in\pre\post_order) dfs of tree
+
+
 class Traversal(object):
 
     def __init__(self):
@@ -72,7 +73,6 @@ class Traversal(object):
             self.in_order_traversal(node.left, visit_func)
             visit_func(node)
             self.in_order_traversal(node.right, visit_func)
-
 
     def pre_order_traversal(self, node, visit_func):
         """
@@ -91,7 +91,6 @@ class Traversal(object):
             self.post_order_traversal(node.left, visit_func)
             self.post_order_traversal(node.right, visit_func)
             visit_func(node)
-
 
 
 if __name__ == '__main__':

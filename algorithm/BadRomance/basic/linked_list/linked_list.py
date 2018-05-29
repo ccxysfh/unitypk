@@ -11,6 +11,8 @@
 Implement a linked list with insert, append, find, delete, length, and print methods
 
 """
+
+
 class LinkedListNode(object):
 
     def __init__(self, data, next=None):
@@ -19,9 +21,6 @@ class LinkedListNode(object):
 
     def __str__(self):
         return self.data
-
-
-
 
 
 class LinkedList(object):
@@ -82,7 +81,15 @@ class LinkedList(object):
                 return
             curr = curr.next
 
-
+    def get_all(self):
+        if self.head is None:
+            return
+        curr = self.head
+        datas = []
+        while curr is not None:
+            datas.append(curr.data)
+            curr = curr.next
+        return datas
 
 
 if __name__ == '__main__':

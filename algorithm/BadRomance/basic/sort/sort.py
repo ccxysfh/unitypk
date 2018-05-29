@@ -8,10 +8,15 @@
 @time: 2018/5/14 18:51
 """
 
+
 class InsertionSort(object):
     """
     Time:O(n), O(n^2), O(n^2)
-    小规模数据集
+    Time: O(n^2) avarage, worst. O(1) best if input is already sorted.
+    Space: O(1)
+    In-place
+    Stable
+    small dataset
     """
     def __init__(self):
         pass
@@ -43,6 +48,7 @@ class InsertionSort(object):
             i = i - 1
         data[i + 1] = value
 
+
 class MedianSort(object):
     """
     Time：
@@ -61,34 +67,120 @@ class MergeSort(object):
     def __init__(self, ):
         pass
 
+
 class QucikSort(object):
+    """Misc:
+    * More sophisticated implementations are in-place, although they still take up recursion depth space
+    * Most implementations are not stable
+
+    See Quicksort on wikipedia:
+
+    Typically, quicksort is significantly faster in practice than other Θ(nlogn) algorithms,
+    because its inner loop can be efficiently implemented on most architectures[presumably because it has good cache locality],
+    and in most real-world data, it is possible to make design choices which minimize the probability of requiring quadratic time.
+    See: Quicksort vs merge sort: http://stackoverflow.com/a/90477"""
+    def __init__(self, ):
+        pass
+
+    def sort(self, data):
+        if data is None:
+            raise TypeError('data can\'t be None')
+        return self._sort(data)
+
+    def _sort(self, data):
+        if len(data) < 2:
+            return data
+        pivot_index = len(data) // 2
+        pivot = data[pivot_index]
+        equal = []
+        left = []
+        right = []
+        for item in data:
+            if item == pivot:
+                equal.append(item)
+            elif item < pivot:
+                left.append(item)
+            else:
+                right.append(item)
+        left_ = self._sort(left)
+        right_ = self._sort(right)
+
+        return left_ + equal + right_
+
+
+class RadixSort(object):  # 基排序
 
     def __init__(self, ):
         pass
 
-class RadixSort(object):# 基排序
-
-    def __init__(self, ):
-        pass
 
 class SelectionSort(object):
     
     def __init__(self, ):
         pass
-    
+
+    def sort(self, data):
+        if data is None:
+            raise TypeError('data cannot be None')
+        if len(data) < 2:
+            return data
+
+        for i in range(len(data) - 1):
+            min_index = i
+            for j in range(i+1, len(data)):
+                if data[j] < data[min_index]:
+                    min_index = j
+            if min_index != i:
+                data[i], data[min_index] = data[min_index], data[i]
+        return data
+
+    def _find_min_index(self, data, start):
+        min_index = start
+        for i in range(start + 1, len(data)):
+            if data[i] < data[min_index]:
+                min_index = i
+        return min_index
+
+    def _swap(self, data, i, j):
+        if i != j:
+            data[i], data[j] = data[j], data[i]
+
+        return data
+
+    def sort_iterative_alt(self, data):
+        if data is None:
+            raise TypeError('data cannot be None')
+        if len(data) < 2:
+            return data
+        for i in range(len(data) - 1):
+            self._swap(data, i, self._find_min_index(data, i))
+        return data
+
+    def sort_recursive(self, data):
+        if data is None:
+            raise TypeError('data cannot be None')
+        if len(data) < 2:
+            return data
+        return self._sort_recursive(data, start=0)
+
+    def _sort_recursive(self, data, start):
+        if data is None:
+            return
+        if start < len(data) - 1:
+            self._swap(data, start, self._find_min_index(data, start))
+            self._sort_recursive(data, start + 1)
+        return data
+
+
+
+
+
 
 class HeapSort(object):
 
     def __init__(self, ):
         pass
 
-
-
-
-
-
-        
-    
 
 if __name__ == '__main__':
     pass
