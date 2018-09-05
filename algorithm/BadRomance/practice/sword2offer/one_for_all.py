@@ -7,11 +7,47 @@
 @file: one_for_all.py
 @time: 2018/9/5 09:57
 """
+from basic.linked_list.linked_list import LinkedList
+from basic.stack_queue.stack import Stack
 from basic.tree.binary_search_tree import BinaryTreeNode, Traversal
 from basic.utils.results import Results
+"""
+2 单例模式
+"""
+
+
+'''
+3 二维数组中的查找
+'''
+
+
+'''
+4 替换空格
+'''
+
+'''
+5 从尾到头打印单链表
+'''
+
+def reverse_linked_list():
+    linkedl = LinkedList()
+    num_str = '123456'
+    for item in num_str:
+        linkedl.append(int(item))
+    print(linkedl.get_all())
+
+    stack = Stack()
+    while linkedl.head:
+        stack.push(linkedl.head.data)
+        linkedl.head = linkedl.head.next
+    while stack.head:
+        print(stack.pop())
+
+
+
 
 """
-题6 重建二叉树
+6 重建二叉树
 根据前序遍历和中序遍历重建二叉树
 """
 
@@ -45,5 +81,95 @@ def test_reconstruct_bt():
     print(results.results)
 
 
+'''
+7 用两个栈实现队列
+'''
+
+
+class QueueByStack(object):
+    """
+    use list as stack
+    """
+    def __init__(self, ):
+        self.stack1 = []
+        self.stack2 = []
+
+    def push(self, data):
+        if data is None:
+            return
+        if not self.stack1 and self.stack2:
+            while self.stack2:
+                self.stack1.append(self.stack2.pop())
+        else:
+            self.stack1.append(data)
+
+    def pop(self):
+        if self.stack1 and not self.stack2:
+            while self.stack1:
+                self.stack2.append(self.stack1.pop())
+        return self.stack2.pop()
+
+    def is_empty(self):
+        if not self.stack1 and not self.stack2:
+            return True
+        else:
+            return False
+
+
+def test_queue_by_stack():
+    queue = QueueByStack()
+    for item in 'a1b2c3':
+        queue.push(item)
+
+    while not queue.is_empty():
+        print(queue.pop())
+
+    
+
+
+'''
+8 旋转数组的最小数字
+'''
+
+'''
+9 斐波那契数列
+'''
+
+'''
+10 二进制中1的个数
+测试用例：正数、负数、0
+'''
+
+
+class CountOne(object):
+    
+    def __init__(self, ):
+        pass
+
+    def count_one(self, n: int):
+        count = 0
+
+        while n:
+            # print(n)
+            count += 1
+            n = n & n-1
+        return count
+
+
+def test_count_one():
+    n = 15
+    count1 = CountOne()
+    result = count1.count_one(n)
+    print(result)
+
+
+
+    
+
+
 if __name__ == '__main__':
-    test_reconstruct_bt()
+    import os
+    # test_reconstruct_bt()
+    # test_count_one()
+    # reverse_linked_list()
+    test_queue_by_stack()
