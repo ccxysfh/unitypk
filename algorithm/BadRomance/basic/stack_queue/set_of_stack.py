@@ -7,11 +7,12 @@
 @file: set_of_stack.py
 @time: 2018/5/26 21:17
 """
+from basic.stack_queue.stack import Stack
 
 """
 Implement SetOfStacks that wraps a list of stacks, where each stack is bound by a capacity
 """
-from basic.stack_queue.stack import Stack
+
 
 class StackWithCapacity(Stack):
     

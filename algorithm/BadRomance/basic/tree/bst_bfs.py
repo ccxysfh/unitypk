@@ -12,6 +12,7 @@ from collections import deque
 
 from basic.tree.binary_search_tree import BinarySearchTree
 
+
 class BinarySearchTreeBfs(BinarySearchTree):
     
     def __init__(self):
