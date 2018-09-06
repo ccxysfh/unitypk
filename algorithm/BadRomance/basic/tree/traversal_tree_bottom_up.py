@@ -7,7 +7,9 @@
 @file: traversal_tree_bottom_up.py
 @time: 2018/6/5 11:02
 """
-
+"""
+从底层到顶层，反向逐层输出树
+"""
 
 class TreeNode(object):
 

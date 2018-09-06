@@ -44,15 +44,3 @@
 43  30  25  10  50  0   0   0   6   6   6   6   0   0   0   0   0   50  0   0
 """
 
-row = int(raw_input())
-print row
-col = int(raw_input())
-print col
-eight_graph = []
-
-for num in range(row):
-    eight_graph.append(raw_input())
-
-
-# if __name__ == '__main__':
-#     pass

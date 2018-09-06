@@ -112,36 +112,3 @@ class Graph:
         for node in root.adj_nodes.values():
             if node.visit_state == State.unvisited:
                 self.dfs(node, visit_func)
-
-node = int(raw_input())
-edges_num = int(raw_input().split(' ')[0])
-graph = Graph()
-
-for i in range(edges_num):
-    edge = raw_input()
-    nodes = edge.split(' ')
-    node_start, node_end = int(nodes[0]), int(nodes[1])
-    graph.add_node(node_start)
-    graph.add_node(node_end)
-    graph.add_edge(node_start, node_end)
-
-all_roads = {}
-for node_id in graph.nodes.keys():
-    results = Results()
-    graph.dfs(node_id, results)
-    all_roads[node_id] = results.results
-
-max_count = 0
-max_node_id =0
-for node_id in all_roads:
-    road_count = len(all_roads[node_id])
-    if road_count > max_count:
-        max_node_id = node_id
-
-print max_node_id
-for road in all_roads[max_node_id]:
-    print road
-
-
-# if __name__ == '__main__':
-#     pass
