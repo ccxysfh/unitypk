@@ -15,7 +15,7 @@ bst
 
 class BinaryTreeNode(object):
     
-    def __init__(self, data):
+    def __init__(self, data=None):
         self.data = data
         self.left = None
         self.right = None

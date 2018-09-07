@@ -37,7 +37,7 @@ class GraphBfs(Graph):
         for node in current_node.adj_nodes.values():
             if node.visit_state == State.unvisited:
                 self.pred[node.key] = current_node.key
-                node.visit_state = State.visiting # 迭代的是字典的视图，修改会反映到字典实体上
+                node.visit_state = State.visitin# 迭代的是字典的视图，修改会反映到字典实体上
                 self.dist[node.key] = self.dist[current_node.key] + 1
                 self.queue.append(node)
         current_node.visit_state = State.visited

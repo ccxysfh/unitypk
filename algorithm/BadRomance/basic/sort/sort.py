@@ -14,9 +14,11 @@ class InsertionSort(object):
     Time:O(n), O(n^2), O(n^2)
     Time: O(n^2) avarage, worst. O(1) best if input is already sorted.
     Space: O(1)
+
     In-place
     Stable
     small dataset
+    每一个值r与左边所有的值比较，确定插入位置l，后面的[l:r]数据向后移一位
     """
     def __init__(self):
         pass
@@ -29,6 +31,7 @@ class InsertionSort(object):
         for r in range(1, len(data)):
             for l in range(r):
                 if data[r] < data[l]:
+                    # 确定插入点l,缓存r位置值
                     temp = data[r]
                     data[l+1: r+1] = data[l: r]
                     data[l] = temp
@@ -63,9 +66,50 @@ class MedianSort(object):
         
 
 class MergeSort(object):
+    """
+    Complexity:
+        Time: O(n log(n))
+        Space: O(n)
 
+    """
     def __init__(self, ):
         pass
+
+    def sort(self, data):
+        if data is None:
+            raise TypeError('data can\'t be None')
+        return self._sort(data)
+
+    def _sort(self, data):
+        if len(data) < 2:
+            return data
+
+        mid = len(data) // 2
+        left = data[:mid]
+        right = data[mid:]
+        left = self._sort(left)
+        right = self._sort(right)
+        return self._merge(left, right)
+
+    def _merge(self, left, right):
+        l = 0
+        r = 0
+        result = []
+        while l < len(left) and r < len(right):
+            if left[l] < right[r]:
+                result.append(left[l])
+                l += 1
+            else:
+                result.append(right[r])
+                r += 1
+        while l < len(left):
+            result.append(left[l])
+            l += 1
+        while r < len(right):
+            result.append(right[r])
+            r += 1
+        return result
+
 
 
 class QucikSort(object):
@@ -119,6 +163,7 @@ class SelectionSort(object):
     def __init__(self, ):
         pass
 
+    # method 1
     def sort(self, data):
         if data is None:
             raise TypeError('data cannot be None')
@@ -134,6 +179,16 @@ class SelectionSort(object):
                 data[i], data[min_index] = data[min_index], data[i]
         return data
 
+    # method 2
+    def sort_iterative_alt(self, data):
+        if data is None:
+            raise TypeError('data cannot be None')
+        if len(data) < 2:
+            return data
+        for i in range(len(data) - 1):
+            self._swap(data, i, self._find_min_index(data, i))
+        return data
+
     def _find_min_index(self, data, start):
         min_index = start
         for i in range(start + 1, len(data)):
@@ -144,18 +199,9 @@ class SelectionSort(object):
     def _swap(self, data, i, j):
         if i != j:
             data[i], data[j] = data[j], data[i]
-
         return data
 
-    def sort_iterative_alt(self, data):
-        if data is None:
-            raise TypeError('data cannot be None')
-        if len(data) < 2:
-            return data
-        for i in range(len(data) - 1):
-            self._swap(data, i, self._find_min_index(data, i))
-        return data
-
+    # method 3
     def sort_recursive(self, data):
         if data is None:
             raise TypeError('data cannot be None')
@@ -177,10 +223,15 @@ class SelectionSort(object):
 
 
 class HeapSort(object):
+    """in-place
+        not stable
+    """
 
     def __init__(self, ):
         pass
 
 
 if __name__ == '__main__':
-    pass
+    sort = MergeSort()
+    data = [5, 1, 7, 2, 6, -3, 5, 7, -1]
+    print(sort.sort(data))

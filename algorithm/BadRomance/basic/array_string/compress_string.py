@@ -7,10 +7,11 @@
 @file: compress_string.py
 @time: 2018/5/28 21:00
 """
+from collections import OrderedDict
 
 
 class CompressString(object):
-    
+
     def __init__(self, ):
         pass
 
@@ -33,7 +34,33 @@ class CompressString(object):
 
     def append_result(self, pre_char, count):
         return pre_char + (str(count) if count > 1 else '')
-    
+
+
+class Anagram(object):
+
+    def __init__(self, ):
+        pass
+
+    def group_anagram(self, items: list):
+        if items is None:
+            raise TypeError('items cannot be None')
+        if not items:
+            return items
+        order_map = OrderedDict()
+        for item in items:
+            sorted_item = tuple(sorted(item))
+            if sorted_item in order_map:
+                order_map[sorted_item].append(item)
+            else:
+                order_map[sorted_item] = [item]
+        result = []
+        for item in order_map:
+            result.extend(order_map[item])
+        return result
+
 
 if __name__ == '__main__':
-    pass
+    data = ['ram', 'act', 'arm', 'bat', 'cat', 'tab']
+    expected = ['ram', 'arm', 'act', 'cat', 'bat', 'tab']
+    ana = Anagram()
+    print(ana.group_anagram(data))

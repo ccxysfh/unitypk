@@ -23,6 +23,14 @@ class LinkedListNode(object):
         return self.data
 
 
+class ComplexLinkedListNode(object):
+    
+    def __init__(self, data, next=None, sibling=None):
+        self.data = data
+        self.next = next
+        self.sibling = sibling
+
+
 class LinkedList(object):
 
     def __init__(self, head=None):
