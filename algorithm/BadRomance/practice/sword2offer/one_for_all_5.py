@@ -111,15 +111,108 @@ class Ugly(object):
 
 """
 35 第一个只出现一次的字符
+相关问题均使用hashtable
 """
+
+
+class FirstUniqueChar(object):
+
+    def __init__(self, ):
+        pass
+
+    def first_unique_char(self, chars):
+        if chars is None:
+            return
+        table = dict()
+        loc = dict()
+        for no, item in enumerate(chars):
+            if item in table:
+                table[item] += 1
+            else:
+                table[item] = 1
+                loc[item] = no
+        first_place = float('inf')
+        ret = None
+        for item in table:
+            if table[item] == 1 and loc[item] < first_place:
+                first_place = loc[item]
+                ret = item
+        return ret
+
+
+def test_first_unique_char():
+    fuc = FirstUniqueChar()
+    chars = ['abaccdeff', 'abaccbddff', '', 'abcdeacb']
+    for item in chars:
+        print(fuc.first_unique_char(item))
+
 
 """
 36 数组中的逆序对
+使用归并排序，并统计每个子分组及分组合并时各自的逆序对
 """
+
+
+class ReversePairs(object):
+
+    def __init__(self,):
+        pass
+
+    def get_pairs(self, nums: list):
+        if nums is None or not nums:
+            return
+        temp = nums.copy()
+        return self._pairs_core(temp, 0, len(temp)-1)
+
+    def _pairs_core(self, copy, start, end):
+        if start == end:  # 递归结束条件
+            return 0
+
+        mid = (end - start) // 2
+        left = self._pairs_core(copy, start, start + mid)
+        right = self._pairs_core(copy, start + mid + 1, end)
+
+        count = 0
+        l_end = start + mid
+        r_end = end
+        t = []  # 记录当前归并结果，逆序
+        while l_end >= start and r_end >= (start + mid + 1):
+            if copy[l_end] > copy[r_end]:
+                count += r_end - start - mid
+                t.append(copy[l_end])
+                l_end -= 1
+            else:
+                t.append(copy[r_end])
+                r_end -= 1
+        while l_end >= start:
+            t.append(copy[l_end])
+            l_end -= 1
+
+        while r_end >= (start + mid + 1):
+            t.append(copy[r_end])
+            r_end -= 1
+
+        copy[start: end+1] = t[::-1]
+
+        return left + count + right
+
+
+def test_reverse_paris():
+    nums = [[7, 5, 6, 4],
+            [7],
+            [],
+            None,
+            [5, 7]]
+    rp = ReversePairs()
+    for item in nums:
+        print(rp.get_pairs(item))
+
 
 """
 37 两个链表的第一个公共结点
 """
 
+
 if __name__ == '__main__':
-    test_array_to_min()
+    # test_first_unique_char()
+    test_reverse_paris()
