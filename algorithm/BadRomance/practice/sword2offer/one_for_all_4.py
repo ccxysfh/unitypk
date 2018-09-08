@@ -110,12 +110,31 @@ class MinStack(object):
 
 """
 23 从上往下打印二叉树
+即广度优先遍历二叉树
 """
 
 """
 24 二叉树的后序遍历序列
 判断一个序列是不是给定树的后续遍历，关注后序遍历的特性
 """
+
+
+def is_post_order(order: list):
+    if order is None or len(order) == 0:
+        return False
+    root = order[-1]
+    left = 0
+    while order[left] < root:
+        left += 1
+    right = left
+    while right < len(order) - 1:
+        if order[right] < root:
+            return False
+        right += 1
+    is_left = True if left == 0 else is_post_order(order[:left])  # 左子序列为空, 因而left = 0
+    is_right = True if left == right else is_post_order(order[left: right])  # 右子树为空，因而left==right
+    return is_left and is_right
+
 
 """
 25 二叉树中和为某一值的路径

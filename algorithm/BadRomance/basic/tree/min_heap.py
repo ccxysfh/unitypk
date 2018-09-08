@@ -7,6 +7,7 @@
 @file: min_heap.py
 @time: 2018/5/16 21:15
 """
+from basic.tree.bst_bfs import BinarySearchTreeBfs
 
 """
 abstract data type-- priority queue
@@ -16,7 +17,6 @@ min heap (the key of parent node is smaller than any child node) max heap on the
 not all trees are binary search tree
 a array_string can represent a tree, wierd, 2*index+1 for left child, 2*index+2 for right child, to get parent take:(index-1)/2;
 """
-from basic.tree.bst_bfs import BinarySearchTreeBfs
 
 
 class MinHeap(object):
