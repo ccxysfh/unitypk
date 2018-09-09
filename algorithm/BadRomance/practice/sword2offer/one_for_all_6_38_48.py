@@ -4,7 +4,7 @@
 """
 @author: changxin
 @mail: chengcx1019@gmail.com
-@file: one_for_all_6.py
+@file: one_for_all_6_38_48.py
 @time: 2018/9/6 15:53
 """
 from basic.tree.lca_tree import Node
@@ -196,9 +196,73 @@ def test_two_unique_num():
 
 """
 41 和为s的两个数字 VS 和为s的连续正数序列
+1. 从已排好序的序列中找到给定和的序列
+2. 输出和为s的连续正数序列
 """
 
 
+class FindNumsWithSum(object):
+    
+    def __init__(self, ):
+        pass
+
+    def find_nums_with_sum(self, sorted_nums: list, sum: int):
+        result = [-1, -1]
+        found = False
+        if sorted_nums is None or not sorted_nums:
+            return found
+
+        ahead = 0  # 数组头指针
+        behind = len(sorted_nums) - 1  # 数组尾指针
+        while ahead < behind:
+            curr_sum = sorted_nums[ahead] + sorted_nums[behind]
+            if curr_sum == sum:
+                result[0] = sorted_nums[ahead]
+                result[1] = sorted_nums[behind]
+                found = True
+                break
+            elif curr_sum < sum:
+                ahead += 1
+            else:
+                behind -= 1
+
+        return found, result
+
+    def find_seq_with_sum(self, sum: int):
+        if sum is None or sum < 3:
+            return
+        start = 1
+        end = 2
+        result = []  # 每一项是一个tuple，包含起点和终点
+        mid = (sum + 1) / 2
+        curr = start + end
+        while start < mid:
+            if curr == sum:
+                result.append((start, end))  # 还可能存在其他解，end需要继续往后走
+            elif curr > sum:
+                curr -= start
+                start += 1
+                continue
+
+            end += 1
+            curr += end
+        return result
+
+    def print_result(self, rt):
+        for s_e in rt:
+            print(''.join([str(i) for i in range(s_e[0], s_e[1]+1)]))
+
+
+def test_find_nums_with_sum():
+    solution = FindNumsWithSum()
+    test_caases = [([1, 2, 4, 7, 11, 15], 15)]
+    for case in test_caases:
+        result = solution.find_nums_with_sum(case[0], case[1])
+        if result[0]:
+            print(result[1])
+        else:
+            print('no result!')
+    solution.print_result(solution.find_seq_with_sum(15))
 
 
 """
@@ -208,7 +272,9 @@ def test_two_unique_num():
 
 """
 43 n个骰子的点数
+
 """
+
 
 """
 44 扑克牌的顺子
@@ -216,7 +282,39 @@ def test_two_unique_num():
 
 """
 45 圆圈中最后剩下的数字
+0,...,n-1这n个数字排成一个圆圈，从数字0开始每次删除第m个数字，求出圈中剩余的最后一个数字
 """
+
+
+class LastRemaining(object):
+
+    def __init__(self, ):
+        pass
+
+    def last_remaining(self, n, m):
+        if n < 0 or m < 0:
+            return
+
+        if n == 1:
+            return 0
+
+        last = 0
+        for i in range(2, n+1):
+            last = (last + m) % i
+        return last
+
+    def last_remaining_recursion(self, n, m):
+        if n == 1:
+            return 0
+        return (self.last_remaining_recursion(n-1, m) + m) % n
+
+
+def test_last_remaining():
+    n = 5
+    m = 3
+    solution = LastRemaining()
+    print(solution.last_remaining(n, m) == solution.last_remaining_recursion(n, m), solution.last_remaining(n, m))
+
 
 """
 46 求1+2...+n
@@ -227,9 +325,37 @@ def test_two_unique_num():
 47 不用加减乘除做加法
 """
 
+
+class AddWithoutOperation(object):
+    
+    def __init__(self, ):
+        pass
+
+    def add(self, num1, num2):
+        carry = 1
+        while carry:
+            sum = num1 ^ num2
+            carry = (num1 & num2) << 1
+
+            num1 = sum
+            num2 = carry
+
+        return num1
+
+
+def test_add():
+    solution = AddWithoutOperation()
+    print(solution.add(3, 4))
+    
+
+
 """
 48 不能被继承的类
+pass
 """
 
 if __name__ == '__main__':
-    test_two_unique_num()
+    # test_two_unique_num()
+    # test_find_nums_with_sum()
+    # test_last_remaining()
+    test_add()

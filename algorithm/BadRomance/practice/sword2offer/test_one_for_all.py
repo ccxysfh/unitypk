@@ -10,7 +10,7 @@
 import unittest
 
 from basic.linked_list.linked_list import ComplexLinkedListNode
-from practice.sword2offer.one_for_all_4 import CloneComplexLinkedList
+from practice.sword2offer.one_for_all_4_19_28 import CloneComplexLinkedList
 
 
 class MyTestCase(unittest.TestCase):

@@ -4,7 +4,7 @@
 """
 @author: changxin
 @mail: chengcx1019@gmail.com
-@file: one_for_all_4.py
+@file: one_for_all_4_19_28.py
 @time: 2018/9/6 15:53
 """
 from basic.linked_list.linked_list import ComplexLinkedListNode

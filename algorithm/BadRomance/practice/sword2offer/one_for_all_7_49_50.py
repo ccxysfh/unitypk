@@ -4,7 +4,7 @@
 """
 @author: changxin
 @mail: chengcx1019@gmail.com
-@file: one_for_all_7.py
+@file: one_for_all_7_49_50.py
 @time: 2018/9/6 15:55
 """
 """
@@ -14,6 +14,7 @@ chapter 6
 
 """
 49 把字符串转化成整数
+考虑测试用例：包含负数，包含运算符号
 """
 
 """

@@ -4,7 +4,7 @@
 """
 @author: changxin
 @mail: chengcx1019@gmail.com
-@file: one_for_all_2.py
+@file: one_for_all_2_2_10.py
 @time: 2018/9/5 09:57
 """
 from basic.linked_list.linked_list import LinkedList, LinkedListNode
