@@ -26,8 +26,10 @@ char_to_direction = {
     'W': 3
 }
 
+
 def opposite_dir_num(dir):
     return (dir + 2) % 4
+
 
 class Node(object):
     
@@ -37,19 +39,21 @@ class Node(object):
         for i in range(4):
             self.edges.append(set())
 
-def is_valid(from_node:Node, to_node:Node, new_direction):
+
+def is_valid(from_node: Node, to_node: Node, new_direction):
     opposite_dir = opposite_dir_num(new_direction)
     if to_node in from_node.edges[opposite_dir]:
         return False
     return True
 
-def add_edgs(from_node:Node, to_node:Node, new_direction):
+
+def add_edgs(from_node: Node, to_node: Node, new_direction):
     opposite_dir = opposite_dir_num(new_direction)
     from_node.edges[new_direction].add(to_node)
     to_node.edges[opposite_dir].add(from_node)
 
     for dir in DIRS:
-        if dir == new_direction: # 如果位置关系是某一节点同侧则这些节点间的位置关系是模糊的
+        if dir == new_direction:  # 如果位置关系是某一节点同侧则这些节点间的位置关系是模糊的
             continue
         for neighbor in from_node.edges[dir]:
             if neighbor == to_node:
@@ -65,8 +69,9 @@ def add_edgs(from_node:Node, to_node:Node, new_direction):
             neighbor.edges[opposite_dir].add(from_node)
             from_node.edges[new_direction].add(neighbor)
 
-def validate(rules): # a list of string which contain 3 eles seperated by space
-    rule_nodes= dict()
+
+def validate(rules):  # a list of string which contain 3 eles seperated by space
+    rule_nodes = dict()
     for line in rules:
         rule = line.split(' ')
         print("rule ", rule[0], " ", rule[1], " ", rule[2])

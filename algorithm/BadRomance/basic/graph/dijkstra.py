@@ -16,8 +16,10 @@ from basic.array_string.priority_queue import PriorityQueue, PriorityQueueNode
 singleSourceShortest
 有向有权图, 距离才是优先队列的key值，是优先级的度量
 优势
-劣势：不能够应用有负权的边
+劣势：不能应用有负权的边
 """
+
+
 class Dijkstra(object):
     
     def __init__(self, graph):

@@ -9,13 +9,14 @@
 """
 from basic.graph.graph import Graph, State, Node
 
+
 class GraphDfs(Graph):
 
     def __init__(self, ):
         super(GraphDfs, self).__init__()
         self.pred = {}
-        self.discovered = {}
-        self.finished = {}
+        self.discovered = {}  # 第一次访问该顶点计数器的值
+        self.finished = {}  # 完成该顶点的深度优先搜索后计数器的值
         self.count = 0
 
     def dfs(self, root, visit_func):
@@ -44,6 +45,8 @@ class GraphDfs(Graph):
         current_node.visit_state = State.visited
         self.count += 1
         self.finished[current_node.key] = self.count
+
+
 
 
 if __name__ == '__main__':

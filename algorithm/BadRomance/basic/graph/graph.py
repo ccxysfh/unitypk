@@ -12,10 +12,11 @@ from enum import Enum
 
 
 class State(Enum):
-    unvisited = 0 # 顶点还未访问
-    visiting = 1 # 顶点已被访问，但还存在未访问的邻接顶点
-    visited = 2 # 顶点已被访问，且所有邻接顶点都被访问
-    
+    unvisited = 0  # 顶点还未访问
+    visiting = 1  # 顶点已被访问，但还存在未访问的邻接顶点
+    visited = 2  # 顶点已被访问，且所有邻接顶点都被访问
+
+
 class Node(object):
 
     def __init__(self, key):
@@ -43,7 +44,7 @@ class Node(object):
 
 
 class Graph(object):
-    
+
     def __init__(self, ):
         self.nodes = {}
 
@@ -68,8 +69,6 @@ class Graph(object):
             raise KeyError('Invalid key')
         self.add_edge(source_key, dest_key, weight)
         self.add_edge(dest_key, source_key, weight)
-        
-
 
 
 
