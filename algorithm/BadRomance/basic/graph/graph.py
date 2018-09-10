@@ -12,9 +12,9 @@ from enum import Enum
 
 
 class State(Enum):
-    unvisited = 0  # 顶点还未访问
-    visiting = 1  # 顶点已被访问，但还存在未访问的邻接顶点
-    visited = 2  # 顶点已被访问，且所有邻接顶点都被访问
+    unvisited = 0  # white，顶点还未访问
+    visiting = 1  # gtey，顶点已被访问，但还存在未访问的邻接顶点
+    visited = 2  # black，顶点已被访问，且所有邻接顶点都被访问
 
 
 class Node(object):

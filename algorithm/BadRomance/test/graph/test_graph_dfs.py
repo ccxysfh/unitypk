@@ -45,8 +45,8 @@ class TestGraphDfs(unittest.TestCase):
         # self.assertEqual(self.graph.finished[2], 8)
         keys = self.graph.discovered.values()
 
-
         all_keys = list(keys)
+
         index = []
         for j in range(len(all_keys)):
             min = all_keys[j]
@@ -64,11 +64,8 @@ class TestGraphDfs(unittest.TestCase):
                 if self.graph.discovered[key] == sorted_value:
                     sorted_index.append(key)
 
-
         for key in sorted_index:
             print(key, " ", self.graph.pred[key], self.graph.discovered[key], self.graph.finished[key])
-
-
 
 
 if __name__ == '__main__':
