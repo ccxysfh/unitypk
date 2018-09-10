@@ -7,18 +7,20 @@
 @file: floyd_warshall.py
 @time: 2018/5/14 11:25
 """
+import sys
+
+from basic.graph.graph import Graph
 """
 allPairsShortest
 Time: O(V^3)
 构建路径的时间为O(E)，而主要的时间消耗在最小化路径上，即优化距离矩阵上
+边的权值必须为正值
 """
-import sys
 
-from basic.graph.graph import Graph
 
 class FloydWarshall(object):
     
-    def __init__(self, graph:Graph):
+    def __init__(self, graph: Graph):
         self.graph = graph
         self.node_num = len(self.graph.nodes)
         self.pred = []
@@ -70,14 +72,10 @@ class FloydWarshall(object):
             path.append(current_pred)
             if current_pred == start_node_key:
                 break
-            current_pred = self.pred[start_node_key][current_pred]
+            current_pred = self.pred[start_node_key][current_pred]  # pred存储两顶点最优路径的倒数第二个顶点
 
         return path[::-1]
 
-
-
-        
-    
 
 if __name__ == '__main__':
     # pass
@@ -90,6 +88,15 @@ if __name__ == '__main__':
                            [3, 0, 1, -1, 0],
                            [3, 0, 1, 4, -1]]
     path = floyd_warshall.construct_shortest_path(1, 4)
+    # 10，210， 3210，40
+    # 0321，21，321，421
+    # 032，1032，32，42
+    # 03，103，2103，403
+    # 034，1034，21034,34
+    for i in range(5):
+        for j in range(5):
+            if i != j:
+                print(floyd_warshall.construct_shortest_path(i, j))
     print(path)
     # print(floyd_warshall.pred)
     # print(floyd_warshall.dist)

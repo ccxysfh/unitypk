@@ -8,16 +8,17 @@
 @file: bellman_ford.py
 @time: 2018/5/14 08:17
 """
+import sys
+
+from basic.graph.graph import Graph
 """
 singleSourceShortest
+适用于包含负权重的图，但不能存在负环
 抛出几个别人基于基准测试后的结论：
 BellmanFord在稠密图上性能退化剧烈
 使用优先队列的Dijkstra算法在稀疏图上具有优异表现
 """
 
-import sys
-
-from basic.graph.graph import Graph
 
 class BellmanFord(object):
     

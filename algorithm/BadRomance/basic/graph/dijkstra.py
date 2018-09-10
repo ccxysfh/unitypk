@@ -13,10 +13,13 @@ import sys
 from basic.array_string.priority_queue import PriorityQueue, PriorityQueueNode
 
 """
-singleSourceShortest
-有向有权图, 距离才是优先队列的key值，是优先级的度量
-优势
+singleSourceShortest单源最短路径
+结束：当所有顶点都被访问或未被访问的都是源点不可达时，算法结束
+输出：源点到图中每个顶点的最短距离，如果输入终止顶点，则输出相应的最短路径，
+有向有权图, 距离才是优先队列的key值（优先级），是优先级的度量
+优势：
 劣势：不能应用有负权的边
+A*搜索
 """
 
 
@@ -24,8 +27,8 @@ class Dijkstra(object):
     
     def __init__(self, graph):
         self.graph = graph
-        self.pred = {}
-        self.dist = {}
+        self.pred = {}  # 搜索结束后从尾顶点开始获取完整路径
+        self.dist = {}  # 存储每个顶点到源点的最短距离
         self.priority_queue = PriorityQueue()
 
         for node in self.graph.nodes.values():
@@ -39,7 +42,7 @@ class Dijkstra(object):
         if start_node_key not in self.graph.nodes:
             raise ValueError('Invalid start or end node key')
 
-        self.dist[start_node_key] = 0
+        self.dist[start_node_key] = 0  # 一旦顶点与起始顶点距离更新，则相应更新优先队列
         self.priority_queue.decrease_key(start_node_key, self.dist[start_node_key])
 
         while self.priority_queue:

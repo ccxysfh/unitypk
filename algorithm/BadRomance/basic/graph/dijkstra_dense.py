@@ -13,6 +13,7 @@ from basic.graph.graph import Graph, State
 
 """
 singleSourceShortest
+针对稠密图的算法效率更高
 Time: O(V^2+E)
 while循环进行n（n为顶点数）轮，n的值是多少，最终的结果是每条边都会得到遍历（起始点可达的前提下），因而时间复杂度为E
 同时呢对于顶点，需要n轮while循环，同时每层循环内都需要遍历顶点找到当前距离的最小值，时间复杂度是V^2,
@@ -49,7 +50,7 @@ class DijkstraDense(object):
                     sd = self.dist[node.key]
                     u = node.key
             if u == -1:
-                break # start_node是自身是分离的，对其他节点均不可达,算法仅进行一轮，在第2轮即终止
+                break  # start_node是自身是分离的，对其他节点均不可达,算法仅进行一轮，在第2轮即终止
             current_node = self.graph.nodes[u]
             for node in current_node.adj_nodes.values():
                 weight = current_node.adj_weights[node.key]
@@ -76,6 +77,7 @@ class DijkstraDense(object):
             reslut.append(current_node_key)
             current_node_key = self.pred[current_node_key]
         return reslut[::-1]
+
 
 if __name__ == '__main__':
     pass

@@ -7,6 +7,8 @@
 @file: fibonacci.py
 @time: 2018/5/28 13:50
 """
+
+
 class Fibonacci(object):
     
     def __init__(self):
@@ -24,7 +26,6 @@ class Fibonacci(object):
             return n
         else:
             return self.fibo_recursive(n - 1) + self.fibo_recursive(n - 2)
-
 
     def fibo_dynamic(self, n):
         cache = {}

@@ -64,7 +64,10 @@ class MedianSort(object):
         """
         pass
         
-
+"""
+归并排序和快速排序的对比：在归并排序中，数据的划分是很快的，算法的主要运行时间在于合并子问题的解，
+而在快速排序中，算法的主要工作在划分阶段，而不需要再去合并子问题的解了
+"""
 class MergeSort(object):
     """
     Complexity:

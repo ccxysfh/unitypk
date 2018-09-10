@@ -11,21 +11,22 @@ import sys
 
 """
 a priority queue backed by an array_string.
+二叉堆
 """
 
 
 class PriorityQueueNode(object):
 
     def __init__(self, obj, key):
-        self.obj = obj
-        self.key = key
+        self.obj = obj  # node.key
+        self.key = key  # dest[node.key]
 
     def __repr__(self):
         return str(self.obj) + ': ' + str(self.key)
 
 
 class PriorityQueue(object):
-    
+
     def __init__(self):
         self.array = []
 
