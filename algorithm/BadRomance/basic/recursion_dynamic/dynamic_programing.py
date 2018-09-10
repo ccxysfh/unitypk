@@ -206,16 +206,39 @@ def test_robot_collect_coins():
 
 class MFKnapsack(object):
     
-    def __init__(self, ):
-        pass
+    def __init__(self, weights: list, values: list):
+        self.weights = weights
+        self.values = values
+        self.cache = {}
+
+    def mfk_napsack(self, i, j):
+        key = tuple([i, j])
+        if i == 0 and j >= 0 or i >=0 and j == 0:
+            self.cache[key] = 0
+            return 0
+
+        if key in self.cache:
+            return self.cache[key]
+        if self.weights[i-1] > j:
+            self.cache[key] = self.mfk_napsack(i-1, j)
+
+        else:
+            self.cache[key] = max(self.mfk_napsack(i-1, j),
+                                     self.mfk_napsack(i-1, j - self.weights[i-1]) + self.values[i-1])
+        return self.cache[key]
 
 
 
-
+def test_mfk_napsack():
+    weights = [2, 1, 3, 2]
+    values = [12, 10, 20, 15]
+    solution = MFKnapsack(weights, values)
+    solution.mfk_napsack(4, 5)
+    print(len(solution.cache), solution.cache)
 
 if __name__ == '__main__':
     # test_min_levenshtein_distance()
     # test_max_cash_botom_top()
     # test_change_making()
     # test_robot_collect_coins()
-    pass
+    test_mfk_napsack()
