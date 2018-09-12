@@ -28,7 +28,7 @@ class TestBinarySearchTree(unittest.TestCase):
         node_datas = [5, 2, 8, 1, 3]
         for node_data in node_datas:
             self.bst.insert(node_data)
-        self.assertEqual(self.bst.root.data, 5)
+        self.assertEqual(self.bst.root.val, 5)
         self.traversal.in_order_traversal(self.bst.root, self.results.add_result)
         self.assertEqual(self.results.results, [1, 2, 3, 5, 8])
         self.results.clean_results()

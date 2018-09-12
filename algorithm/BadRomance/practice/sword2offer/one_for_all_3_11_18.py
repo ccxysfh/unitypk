@@ -335,28 +335,47 @@ def test_merge_linkedlist():
 
 """
 18 树的子结构
+约定空树不是任意一个树的子结构
 递归停止条件：为描述方便，判断右树是不是左树的子树，左树的当前节点的左子或右子为空，而右树当前节点的左子或右子不为空；其他均为空或左树不为空，均返回真值；均不为空，继续递归
 """
+
+
 class TreeNode:
     def __init__(self, x):
         self.val = x
         self.left = None
         self.right = None
 
+
 class SubTree(object):
 
     def __init__(self, ):
         pass
 
-    def sub_tree(self, tree1: BinaryTreeNode, tree2: BinaryTreeNode):
-        if tree1 and tree2:
-            if tree1.data == tree2.data:
-                return self.sub_tree(tree1.left, tree2.left) and self.sub_tree(tree1.right, tree2.right)
-            else:
-                return self.sub_tree(tree1.left, tree2) or self.sub_tree(tree1.right, tree2)
+    def has_subtree(self, tree1: BinaryTreeNode, tree2: BinaryTreeNode):
+        if not tree2:
+            return False  # 空树不是任何树的子树
+        if not tree1:
+            return False
+        result = False
+        if tree1.val == tree2.val:
+            result = self.does_tree1_has_tree2(tree1, tree2)
+        if not result:
+            return self.has_subtree(tree1.left, tree2) or self.has_subtree(tree1.right, tree2)
+        else:
+            return True
+
+    def does_tree1_has_tree2(self, tree1, tree2):
         if not tree1 and tree2:
             return False
+        if tree1 and tree2:
+            if tree1.val != tree2.val:
+                return False
+            else:
+                return self.does_tree1_has_tree2(tree1.left, tree2.left) and self.does_tree1_has_tree2(tree1.right, tree2.right)
         return True
+
+
 
 
 if __name__ == '__main__':

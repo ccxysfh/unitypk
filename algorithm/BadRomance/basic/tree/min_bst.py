@@ -21,7 +21,7 @@ class MinBst(object):
         if sorted_array is None:
             return None
         self.root = self._min_bst(sorted_array, 0, len(sorted_array) - 1)
-        return self.root.data
+        return self.root.val
 
     def _min_bst(self, array, start, end):
         if start > end:

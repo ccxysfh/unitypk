@@ -16,13 +16,13 @@ bst
 class BinaryTreeNode(object):
     
     def __init__(self, data=None):
-        self.data = data
+        self.val = data
         self.left = None
         self.right = None
         self.parent = None
 
     def __repr__(self):
-        return str(self.data)
+        return str(self.val)
         
 
 class BinarySearchTree(object):
@@ -42,7 +42,7 @@ class BinarySearchTree(object):
     def _insert(self, node, data):
         if node is None:
             return BinarySearchTree(data)
-        if data < node.data:
+        if data < node.val:
             if node.left is None:
                 node.left = BinaryTreeNode(data)
                 node.left.parent = node

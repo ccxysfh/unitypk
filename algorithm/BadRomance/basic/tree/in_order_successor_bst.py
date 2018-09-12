@@ -14,7 +14,7 @@ class InOrderSuccessorBst(BinarySearchTree):
     def __init__(self):
         super(InOrderSuccessorBst, self).__init__()
 
-    def in_order_successor(self, node:BinaryTreeNode):
+    def in_order_successor(self, node: BinaryTreeNode):
         if node is None:
             raise TypeError("node can't be None")
         if node.right is not None:
@@ -22,23 +22,20 @@ class InOrderSuccessorBst(BinarySearchTree):
         else:
             return self._next_ancestor(node)
 
-    def _left_most(self, node:BinaryTreeNode):
+    def _left_most(self, node: BinaryTreeNode):
         if node.left is not None:
             return self._left_most(node.left)
         else:
-            return node.data
+            return node.val
 
-    def _next_ancestor(self, node:BinaryTreeNode):
+    def _next_ancestor(self, node: BinaryTreeNode):
         if node.parent is not None:
-            if node.parent.data > node.data:
-                return node.parent.data
+            if node.parent.val > node.val:
+                return node.parent.val
             else:
                 return self._next_ancestor(node.parent)
 
         return None
-
-
-
 
 
 if __name__ == '__main__':
