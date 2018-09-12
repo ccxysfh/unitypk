@@ -103,6 +103,40 @@ class OddBeroreEven(object):
                 post -= 1
         return num_list
 
+    def _merge(self, left, right):
+        l = 0
+        r = 0
+        result = []
+        while l < len(left) and r < len(right):
+            if left[l] % 2 != 0:
+                result.append(left[l])
+                l += 1
+            elif left[l] % 2 == 0 and right[r] % 2 != 0:
+                result.append(right[r])
+                r += 1
+            elif left[l] % 2 == 0 and right[r] % 2 == 0:
+                result.append(left[l])
+                l += 1
+        while l < len(left):
+            result.append(left[l])
+            l += 1
+        while r < len(right):
+            result.append(right[r])
+            r += 1
+        return result
+
+    # 如果对本题进行修改，输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，
+    # 所有的偶数位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。
+    # 定义一个新的排序规则奇数小于任意偶数，并应用一种稳定的排序方式，另外，如果原始数组是无序的，则判断条件还需要相应改变
+    def re_order_array(self, array):
+        # write code here
+        if len(array) < 2:
+            return array
+        mid = len(array) // 2
+        left = self.re_order_array(array[:mid])
+        right = self.re_order_array(array[mid:])
+        return self._merge(left, right)
+
 
 def test_odd_before_even():
     test_cases = [[1, 2, 3, 4, 5], [9, 3, 1, 0, 1, 9], [1, 2, 1, 2, 9, 3]]
@@ -114,6 +148,31 @@ def test_odd_before_even():
 """
 15 链表中倒数第k个结点
 """
+class ListNode:
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+
+class LastK(object):
+    def find_kth_to_tail(self, head, k):
+        # write code here
+
+        node = head
+        node2 = head
+        count = 0
+        result = []
+        while node2:
+            if count < k:
+
+                count += 1
+            else:
+                node = node.next
+            node2 = node2.next
+        if count < k:
+            return
+
+        return node
+
 
 """
 16  反转链表
@@ -164,7 +223,7 @@ def test_reverse_linkedlist():
 """
 17 合并两个排序的链表
 合并链表merge，两者有一方不空时进入循环：
-循环主体：
+
 """
 
 
@@ -184,29 +243,57 @@ class MergeLinkedList(object):
         l1 = head1
         l2 = head2
         merge = LinkedList()
-        count = 0
 
-        while l1 or l2:
-            count = count + 1
+        while l1 and l2:
             if l1.data < l2.data:
                 merge.append(l1.data)
                 l1 = l1.next
             else:
                 merge.append(l2.data)
                 l2 = l2.next
-            if not l1:
-                while l2:
-                    merge.append(l2.data)
-                    l2 = l2.next
-                print(count)
-                return merge
-            if not l2:
-                merge.append(l1.data)
-                l1 = l1.next
-                print(count)
-                return merge
-        print('count:', count)
+        while l2:
+            merge.append(l2.data)
+            l2 = l2.next
+        while l1:
+            merge.append(l1.data)
+            l1 = l1.next
         return merge
+
+    def merge_2(self, p_head1, p_head2):
+        # write code here
+        if not p_head1 and not p_head2:
+            return
+        if not p_head1:
+            return p_head2
+        if not p_head2:
+            return p_head1
+        p1 = p_head1
+        p2 = p_head2
+
+        if p1.val <= p2.val:
+            merge = ListNode(p1.val)
+            p1 = p1.next
+        else:
+            merge = ListNode(p2.val)
+            p2 = p2.next
+        merge_head = merge
+        while p1 and p2:
+            if p1.val <= p2.val:
+                merge.next = ListNode(p1.val)
+                p1 = p1.next
+            else:
+                merge.next = ListNode(p2.val)
+                p2 = p2.next
+            merge = merge.next
+        while p1:
+            merge.next = ListNode(p1.val)
+            merge = merge.next
+            p1 = p1.next
+        while p2:
+            merge.next = ListNode(p2.val)
+            merge = merge.next
+            p2 = p2.next
+        return merge_head
 
     def merge_recurssion(self, head1, head2):
         if not head1 and not head2:
@@ -250,7 +337,11 @@ def test_merge_linkedlist():
 18 树的子结构
 递归停止条件：为描述方便，判断右树是不是左树的子树，左树的当前节点的左子或右子为空，而右树当前节点的左子或右子不为空；其他均为空或左树不为空，均返回真值；均不为空，继续递归
 """
-
+class TreeNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
 
 class SubTree(object):
 

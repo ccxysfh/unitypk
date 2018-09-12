@@ -71,6 +71,10 @@ class Graph(object):
         self.add_edge(dest_key, source_key, weight)
 
 
+"""
+图的其他表示方式，邻接表和邻接矩阵
+邻接矩阵是对称的，
+"""
 
 if __name__ == '__main__':
     pass
