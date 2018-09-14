@@ -176,7 +176,7 @@ def test_mini_stack():
 """
 22 栈的压入弹出序列
 依次弹出出栈序列首字符，开始循环
-push_seq, pop_seq,比较压栈序列和出栈序列，与出栈序列第一个字符不同字符依次进栈，两个序列弹出相同字符
+push_seq, pop_seq,如果栈当前非空，比较栈顶字符与当前出栈字符，不匹配则比较压栈序列和出栈序列，与出栈序列第一个字符不同字符依次进栈，两个序列弹出相同字符；
 比较栈顶字符与当前出栈字符，相同则弹出字符，同时判断压栈序列是否为空，若为空，则依次比较栈的出栈元素和出栈序列是否相等
 循环结束
 """
@@ -186,7 +186,7 @@ class IsPopOrder:
         if not pushV or not popV:
             return False
         stack = []
-        while popV:
+        while popV:  # 以弹出序列作为循环条件
             pop_val = popV[0]
             if stack and stack[-1] == pop_val:
                 stack.pop()
@@ -246,19 +246,22 @@ class BFS(object):
 
 
 def is_post_order(order: list):
+    # 事实上除了最初序列为空，递归过程中不会出现空序列进入调用的情况，在单元素就会返回了，而且一定会返回TRUE
     if order is None or len(order) == 0:
         return False
     root = order[-1]
     left = 0
+    # 如果只有一个元素的话，不会进入循环，因而不会出现数组越界，并且 left=0，right=left，返回true
     while order[left] < root:
         left += 1
+
     right = left
     while right < len(order) - 1:
         if order[right] < root:
             return False
         right += 1
-    is_left = True if left == 0 else is_post_order(order[:left])  # 左子序列为空, 因而left = 0
-    is_right = True if left == right else is_post_order(order[left: right])  # 右子树为空，因而left==right
+    is_left = True if left == 0 else is_post_order(order[:left])  # 左子序列为空, 因而left = 0，左子满足
+    is_right = True if left == right else is_post_order(order[left: right])  # 右子树为空，因而left==right，右子满足
     return is_left and is_right
 
 
@@ -305,7 +308,7 @@ class FindPathSum(object):
         current_sum += bst_root.data
         path.append(bst_root.data)
         if current_sum == expected_sum and is_leaf:
-            print(path)
+            print(path[:])  # 注意path的引用问题
 
         if bst_root.left is not None:
             self._find_path(bst_root.left, expected_sum, path, current_sum)
@@ -417,12 +420,12 @@ class TransferBstToDoubleLinkedList(object):
     """
     27 二叉搜索树与双向链表
     将二叉搜索树转换成一个排序的双向链表
-    前序遍历可将搜索二叉树从小到大遍历
+    中序遍历可将搜索二叉树从小到大遍历
     """
     def __init__(self, ):
         pass
 
-    # 输入为数的根节点
+    # 输入为树的根节点
     def transfer(self, root):
         if root is None:
             return
@@ -488,8 +491,7 @@ class Permutation(object):
             if len(s) > 0:
                 self._Permutation(s)
             else:
-                print(self.str_perm)
-                self.result.append(self.str_perm[:])
+                self.result.append(self.str_perm[:])  # 注意深浅复制问题
             self.str_perm.pop()
 
     def Permutation(self, ss):
@@ -497,7 +499,6 @@ class Permutation(object):
         if not ss:
             return []
         self._Permutation(ss)
-        print(self.result)
         for i in self.result:
             if "".join(i) not in self.ret:
                 self.ret.append("".join(i))

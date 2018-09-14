@@ -303,9 +303,35 @@ def test_reverse_paris():
         print(rp.InversePairs(item))
         # print(rp.get_pairs(item))
 
+
 """
 37 两个链表的第一个公共结点
 """
+
+
+class CommonNode(object):
+
+    def __init__(self, ):
+        self.stack1 = []
+        self.stack2 = []
+
+    def least_common_node(self, l1, l2):
+        if not l1 or not l2:
+            return None
+        while l1:
+            self.stack1.append(l1)
+            l1 = l1.next
+        while l2:
+            self.stack2.append((l2))
+            l2 = l2.next
+        least = None
+        while self.stack1 and self.stack2:
+            item = self.stack1.pop()
+            if item is self.stack2.pop():
+                least = item
+            else:
+                break
+        return least
 
 
 if __name__ == '__main__':

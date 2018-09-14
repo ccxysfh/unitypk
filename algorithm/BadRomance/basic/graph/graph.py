@@ -73,8 +73,108 @@ class Graph(object):
 
 """
 图的其他表示方式，邻接表和邻接矩阵
-邻接矩阵是对称的，
+邻接矩阵是对称的
+以及判断节点连接方式和节点度的方式也会不一样
 """
+class GraphRepresent(object):
+
+    def __init__(self, ):
+        pass
+
+    def adjacency_list(self):
+        # A Straightforward Adjacency List Representation
+        a, b, c, d, e, f, g, h = range(8)
+        N = [
+            [b, c, d, e, f],  # a
+            [c, e],  # b
+            [d],  # c
+            [e],  # d
+            [f],  # e
+            [c, g, h],  # f
+            [f, h],  # g
+            [f, g]  # h
+        ]
+
+        b in N[a]  # Neighborhood membership -> True
+        len(N[f])  # Degree -> 3
+
+        # A Straightforward Adjacency Set Representation
+        a, b, c, d, e, f, g, h = range(8)
+        N = [
+            {b, c, d, e, f},  # a
+            {c, e},  # b
+            {d},  # c
+            {e},  # d
+            {f},  # e
+            {c, g, h},  # f
+            {f, h},  # g
+            {f, g}  # h
+        ]
+
+        b in N[a]  # Neighborhood membership -> True
+        len(N[f])  # Degree -> 3
+
+        # A Straightforward Adjacency Dict Representation
+        a, b, c, d, e, f, g, h = range(8)
+        N = [
+            {b: 2, c: 1, d: 3, e: 9, f: 4},  # a
+            {c: 4, e: 3},  # b
+            {d: 8},  # c
+            {e: 7},  # d
+            {f: 5},  # e
+            {c: 2, g: 2, h: 2},  # f
+            {f: 1, h: 6},  # g
+            {f: 9, g: 8}  # h
+        ]
+
+        b in N[a]  # Neighborhood membership -> True
+        len(N[f])  # Degree -> 3
+        N[a][b]  # Edge weight for (a, b) -> 2
+
+        N = {
+            'a': set('bcdef'),
+            'b': set('ce'),
+            'c': set('d'),
+            'd': set('e'),
+            'e': set('f'),
+            'f': set('cgh'),
+            'g': set('fh'),
+            'h': set('fg')
+        }
+
+    def adjacency__matrix(self):
+        # An Adjacency Matrix, Implemented with Nested Lists
+        a, b, c, d, e, f, g, h = range(8)
+        N = [[0, 1, 1, 1, 1, 1, 0, 0],  # a
+             [0, 0, 1, 0, 1, 0, 0, 0],  # b
+             [0, 0, 0, 1, 0, 0, 0, 0],  # c
+             [0, 0, 0, 0, 1, 0, 0, 0],  # d
+             [0, 0, 0, 0, 0, 1, 0, 0],  # e
+             [0, 0, 1, 0, 0, 0, 1, 1],  # f
+             [0, 0, 0, 0, 0, 1, 0, 1],  # g
+             [0, 0, 0, 0, 0, 1, 1, 0]]  # h
+
+        N[a][b]  # Neighborhood membership -> 1
+        sum(N[f])  # Degree -> 3
+
+        # 带权值的连接矩阵表示
+        a, b, c, d, e, f, g, h = range(8)
+        _ = float('inf')
+
+        W = [[0, 2, 1, 3, 9, 4, _, _],  # a
+             [_, 0, 4, _, 3, _, _, _],  # b
+             [_, _, 0, 8, _, _, _, _],  # c
+             [_, _, _, 0, 7, _, _, _],  # d
+             [_, _, _, _, 0, 5, _, _],  # e
+             [_, _, 2, _, _, 0, 2, 2],  # f
+             [_, _, _, _, _, 1, 0, 6],  # g
+             [_, _, _, _, _, 9, 8, 0]]  # h
+
+        W[a][b] < _  # Neighborhood membership
+        sum(1 for w in W[a] if w < _) - 1  # Degree
+
+
+
 
 if __name__ == '__main__':
     pass
