@@ -93,5 +93,119 @@ class Traversal(object):
             visit_func(node)
 
 
+class AllTraversal(object):
+
+    def preorder_traversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        if not root:
+            return []
+        ret = []
+
+        def _preorder(root, ret):
+            ret.append(root.val)
+            if root.left:
+                _preorder(root.left, ret)
+            if root.right:
+                _preorder(root.right, ret)
+
+        # _preorder(root, ret)
+        # return ret
+
+        def _preorder_loop(root, ret):
+            stack = []
+            stack.append(root)
+            while stack:
+                item = stack.pop()
+                ret.append(item.val)
+                if item.right:
+                    stack.append(item.right)
+                if item.left:
+                    stack.append(item.left)
+
+        def _preorder_loop2(root, ret):
+            stack = []
+            p = root
+            while stack or p:
+                if p is not None:
+                    ret.append(p.val)
+                    stack.append(p)
+                    p = p.left
+                else:
+                    p = stack.pop()
+                    p = p.right
+
+        _preorder_loop(root, ret)
+        return ret
+
+    def inorder_traversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        if not root:
+            return []
+        ret = []
+
+        def _inorder(root, ret):
+
+            if root.left:
+                _inorder(root.left, ret)
+            ret.append(root.val)
+            if root.right:
+                _inorder(root.right, ret)
+
+        def _inorder_loop(root, ret):
+            stack = []
+            p = root
+            while stack or p:
+                if p is not None:
+                    stack.push(p)
+                    p = p.left
+                else:
+                    p = stack.pop()
+                    ret.append(p.val)
+                    p = p.right
+        return ret
+
+    def postorder_traversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        if not root:
+            return []
+        ret = []
+
+        def _postorder(root, ret):
+
+            if root.left:
+                _postorder(root.left, ret)
+            if root.right:
+                _postorder(root.right, ret)
+
+            ret.append(root.val)
+
+        def _postorder_loop(root, ret):
+            # ret 更精确的是使用链表，进行add_first操作，循环结束后，将ret反向
+            p = root
+            stack = []
+            while stack or p:
+                if p is not None:
+                    stack.append(p)  # p 记录左子的指针
+                    ret.append(p.val)
+                    p = p.right
+                else:
+                    p = stack.pop()
+                    p = p.left
+            ret.reverse()
+
+        return ret
+
+
+
+
 if __name__ == '__main__':
     pass
