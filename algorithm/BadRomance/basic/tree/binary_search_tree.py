@@ -162,7 +162,7 @@ class AllTraversal(object):
             p = root
             while stack or p:
                 if p is not None:
-                    stack.push(p)
+                    stack.append(p)
                     p = p.left
                 else:
                     p = stack.pop()
