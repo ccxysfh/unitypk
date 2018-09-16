@@ -18,6 +18,7 @@ class GraphDfs(Graph):
         self.discovered = {}  # 第一次访问该顶点计数器的值
         self.finished = {}  # 完成该顶点的深度优先搜索后计数器的值
         self.count = 0  # 计数器
+        self.topsort = []  # 逆序输出即为拓扑排序的结果
 
     def dfs(self, root, visit_func):
         if root is None:
@@ -30,7 +31,7 @@ class GraphDfs(Graph):
         visit_func(self.nodes[root])
         # 针对非连通图而言
         for node in self.nodes.values():
-            if node.visit_state == State.unvisited:
+            if node.visit_state == State.unvisited:  # 如果还有节点未访问，说明还有节点是源点s不可达的，有向图中这类情况很多
                 visit_func(node)
 
     # 对于每一节点，访问开始时标记为灰色，递归访问完所有的邻接节点后标记为黑色
@@ -43,8 +44,10 @@ class GraphDfs(Graph):
                 self.pred[node.key] = current_node.key
                 self.dfs_visit(node)
         current_node.visit_state = State.visited
+        self.topsort.append(current_node.key)  # 标记为黑色即加入序列
         self.count += 1  # 开始访问顶点及顶点访问结束均需要累加计数器
         self.finished[current_node.key] = self.count
+
 
 
 if __name__ == '__main__':

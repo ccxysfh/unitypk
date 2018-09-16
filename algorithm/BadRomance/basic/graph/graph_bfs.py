@@ -40,7 +40,7 @@ class GraphBfs(Graph):
                 self.pred[node.key] = current_node.key
                 node.visit_state = State.visiting  # 迭代的是字典的视图，修改会反映到字典实体上
                 self.dist[node.key] = self.dist[current_node.key] + 1
-                self.queue.append(node)
+                self.queue.append(node)  # 先进先出队列管理灰色节点集
         current_node.visit_state = State.visited
 
 
