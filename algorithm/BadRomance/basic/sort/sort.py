@@ -154,6 +154,50 @@ class QucikSort(object):
 
         return left_ + equal + right_
 
+    # 标准的快排实现
+    def partition(self, data, start, end):
+        # 要进行上下限的限制
+        if start >= end:
+            return
+        index = start
+        l = start + 1
+        r = end
+        while l <= r:
+
+            while data[l] < data[index] and l < end:
+                l += 1
+            while data[r] >= data[index] and r >start:
+                r -= 1
+            data[l], data[r] = data[r], data[l]
+
+            l += 1
+            r -= 1
+
+        if l > end:
+            l = end
+        if r < start:
+            r = start
+
+        data[index], data[r] = data[r], data[index]
+        self.partition(data, start, r-1)
+        self.partition(data, r+1, end)
+
+
+
+def test_quick_sort():
+    qs = QucikSort()
+    # data = [9, 3, 1, 2, 1, 9]
+    data = [5, 3, 1, 9, 8, 2, 4, 7]
+    ret = qs.partition(data, 0, len(data)-1)
+    print(data)
+
+
+
+
+
+
+
+
 
 class RadixSort(object):  # 基排序
 
@@ -235,6 +279,8 @@ class HeapSort(object):
 
 
 if __name__ == '__main__':
-    sort = MergeSort()
-    data = [5, 1, 7, 2, 6, -3, 5, 7, -1]
-    print(sort.sort(data))
+    # sort = MergeSort()
+    # data = [5, 1, 7, 2, 6, -3, 5, 7, -1]
+    # print(sort.sort(data))
+    print('start')
+    test_quick_sort()

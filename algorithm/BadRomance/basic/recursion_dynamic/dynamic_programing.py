@@ -9,9 +9,10 @@
 """
 import sys
 
+
 # transfer from a to b
 class LevenshteinDistance(object):
-    
+
     def __init__(self, ):
         pass
 
@@ -33,23 +34,23 @@ class LevenshteinDistance(object):
 
         for j in range(1, height):
             for i in range(1, width):
-                indicator = 0 if a[i-1] == b[j-1] else 1
-                lev_matrix[j][i] = min(lev_matrix[j][i-1] + 1,  # deletion
-                                       lev_matrix[j-1][i] + 1,  # insertion
-                                       lev_matrix[j-1][i-1] + indicator)  # substitution
+                indicator = 0 if a[i - 1] == b[j - 1] else 1
+                lev_matrix[j][i] = min(lev_matrix[j][i - 1] + 1,  # deletion
+                                       lev_matrix[j - 1][i] + 1,  # insertion
+                                       lev_matrix[j - 1][i - 1] + indicator)  # substitution
 
-        return lev_matrix[height-1][width-1]
+        return lev_matrix[height - 1][width - 1]
 
 
 def test_min_levenshtein_distance():
     solution = LevenshteinDistance()
     print(solution.min_levenshtein_distance('ME', 'MY'))
     print(solution.min_levenshtein_distance('Saturday', 'Sunday'))
-    
+
 
 # 币值最大化问题：一排硬币，原始位置互不相邻，总金额最大
 class MaxCash(object):
-    
+
     def __init__(self, ):
         pass
 
@@ -57,17 +58,18 @@ class MaxCash(object):
         if n == 0:
             return 0
         if n == 1:
-            return coins[n-1]
-        return max(self.max_cash_top(coins, n-1), self.max_cash_top(coins, n-2) + coins[n-1])
+            return coins[n - 1]
+        return max(self.max_cash_top(coins, n - 1), self.max_cash_top(coins, n - 2) + coins[n - 1])
 
     def max_cash_top_cache(self, coins: list, n, cache):
         if n == 0:
             return 0
         if n == 1:
-            return coins[n-1]
+            return coins[n - 1]
         if n in cache:
             return cache[n]
-        cache[n] = max(self.max_cash_top_cache(coins, n-1, cache), self.max_cash_top_cache(coins, n-2, cache) + coins[n-1])
+        cache[n] = max(self.max_cash_top_cache(coins, n - 1, cache),
+                       self.max_cash_top_cache(coins, n - 2, cache) + coins[n - 1])
         return cache[n]
 
     def max_cash_botom_top(self, coins: list, n):
@@ -90,7 +92,7 @@ def test_max_cash_botom_top():
 
 # 'change' problem 找零问题，找零金额为n，最小需要多少枚不同面值的硬币
 class ChangeMaking(object):
-    
+
     def __init__(self, ):
         pass
 
@@ -99,7 +101,7 @@ class ChangeMaking(object):
             return 0
         coins_len = len(coins)
 
-        for i in range(1, n+1):
+        for i in range(1, n + 1):
             temp = sys.maxsize
             j = 0
             while j < coins_len and i >= coins[j]:
@@ -112,12 +114,12 @@ class ChangeMaking(object):
         if n == 0:
             return 0
         coins_len = len(coins)
-        for i in range(1, n+1):
+        for i in range(1, n + 1):
             temp = sys.maxsize
             j = 0
             while j < coins_len and i >= coins[j]:
-                if i-coins[j] not in cache:
-                    cache[i-coins[j]] = self.change_making_cache(coins, i - coins[j], cache)
+                if i - coins[j] not in cache:
+                    cache[i - coins[j]] = self.change_making_cache(coins, i - coins[j], cache)
                 temp = min(cache[i - coins[j]], temp)
                 j += 1
             cache[i] = temp + 1
@@ -131,14 +133,13 @@ def test_change_making():
     print(solution.change_making_cache([1, 3, 4], 6, cache))
 
 
-
 class RobotCoinCollect(object):
     """
     在nxm格木板中放有一些硬币，每格的硬币数目最多为一个。在木板左上方的一个机器人需要收集尽可能多的硬币并把
     它们带到右下角的单元格。每一步机器人可以选择向右或向下走一步。
     设计一个算法找出机器人能够找到的最大硬币数目并给出相应的路径。
     """
-    
+
     def __init__(self, ):
         pass
 
@@ -165,34 +166,34 @@ class RobotCoinCollect(object):
         count_coin[0][0] = coin_matrix[0][0]
         for j in range(m):
             if j > 0:
-                count_coin[0][j] = count_coin[0][j-1] + coin_matrix[0][j]
+                count_coin[0][j] = count_coin[0][j - 1] + coin_matrix[0][j]
         for i in range(1, n):
-            count_coin[i][0] = count_coin[i-1][0] + coin_matrix[i][0]
+            count_coin[i][0] = count_coin[i - 1][0] + coin_matrix[i][0]
 
             for j in range(1, m):
                 # indicator = 1 if (i, j) in coins else 0
-                count_coin[i][j] = max(count_coin[i-1][j], count_coin[i][j-1]) + coin_matrix[i][j]
-        path.append([n-1, m-1])
-        self.find_path(count_coin, path, n-1, m-1)
-        return count_coin[n-1][m-1]
+                count_coin[i][j] = max(count_coin[i - 1][j], count_coin[i][j - 1]) + coin_matrix[i][j]
+        path.append([n - 1, m - 1])
+        self.find_path(count_coin, path, n - 1, m - 1)
+        return count_coin[n - 1][m - 1]
 
     def find_path(self, count_coin, path: list, n, m):
         if m == 0 and n == 0:
             return
         if m >= 1 and n >= 1:
-            if count_coin[n][m-1] >= count_coin[n-1][m]:
-                path.append([n, m-1])
-                self.find_path(count_coin, path, n, m-1)
+            if count_coin[n][m - 1] >= count_coin[n - 1][m]:
+                path.append([n, m - 1])
+                self.find_path(count_coin, path, n, m - 1)
             else:
-                path.append([n-1, m])
-                self.find_path(count_coin, path, n-1, m)
+                path.append([n - 1, m])
+                self.find_path(count_coin, path, n - 1, m)
         elif m > 0:  # 到达第一行
             while m > 0:
-                path.append([0, m-1])
+                path.append([0, m - 1])
                 m -= 1
         elif n > 0:  # 到达第一列
             while n > 0:
-                path.append([n-1, 0])
+                path.append([n - 1, 0])
                 n -= 1
 
 
@@ -205,7 +206,7 @@ def test_robot_collect_coins():
 
 
 class MFKnapsack(object):
-    
+
     def __init__(self, weights: list, values: list):
         self.weights = weights
         self.values = values
@@ -213,20 +214,19 @@ class MFKnapsack(object):
 
     def mfk_napsack(self, i, j):
         key = tuple([i, j])
-        if i == 0 and j >= 0 or i >=0 and j == 0:
+        if i == 0 and j >= 0 or i >= 0 and j == 0:
             self.cache[key] = 0
             return 0
 
         if key in self.cache:
             return self.cache[key]
-        if self.weights[i-1] > j:
-            self.cache[key] = self.mfk_napsack(i-1, j)
+        if self.weights[i - 1] > j:
+            self.cache[key] = self.mfk_napsack(i - 1, j)
 
         else:
-            self.cache[key] = max(self.mfk_napsack(i-1, j),
-                                     self.mfk_napsack(i-1, j - self.weights[i-1]) + self.values[i-1])
+            self.cache[key] = max(self.mfk_napsack(i - 1, j),
+                                  self.mfk_napsack(i - 1, j - self.weights[i - 1]) + self.values[i - 1])
         return self.cache[key]
-
 
 
 def test_mfk_napsack():
@@ -235,6 +235,69 @@ def test_mfk_napsack():
     solution = MFKnapsack(weights, values)
     solution.mfk_napsack(4, 5)
     print(len(solution.cache), solution.cache)
+
+
+"""
+七步搞定动态规划问题
+1. 识别动态规划问题
+2. 确定问题变量
+3. 清楚的表达递推关系
+4. 确定基本案例
+5. 决定使用递归还是迭代实现
+6. 添加缓存
+7. 确定算法复杂度
+"""
+
+
+def can_stop_recursive(runway, init_speed, start_index=0):
+    # negative base cases need to go first
+    if (start_index >= len(runway) or start_index < 0 or init_speed < 0 or not runway[start_index]):
+        return False
+    # base case for a stopping condition
+    if init_speed == 0:
+        return True
+    # Try all possible paths
+    for adjustedSpeed in [init_speed, init_speed - 1, init_speed + 1]:
+        # Recurrence relation: If you can stop from any of the subproblems,
+        #  you can also stop from the main problem
+        if can_stop_recursive(runway, adjustedSpeed, start_index + adjustedSpeed):
+            return True
+    return False
+
+
+def insert_into_memo(memo, start_index, init_speed, ret):
+    if start_index not in memo:
+        memo[start_index] = {}
+        memo[start_index][init_speed] = ret
+    else:
+        memo[start_index][init_speed] = ret
+
+
+def can_stop_recursive_with_memo(runway, init_speed, start_index=0, memo=None):
+    # Only done the first time to initialize the memo.
+    if memo is None:
+        memo = {}
+    # First check if the result exists in memo
+    if start_index in memo and init_speed in memo[start_index]:
+        return memo[start_index][init_speed]
+    # negative base cases need to go first
+    if (start_index >= len(runway) or start_index < 0 or init_speed < 0 or not runway[start_index]):
+        insert_into_memo(memo, start_index, init_speed, False)
+        return False
+    # base case for a stopping condition
+    if init_speed == 0:
+        insert_into_memo(memo, start_index, init_speed, True)
+        return True
+    # Try all possible paths
+    for adjustedSpeed in [init_speed, init_speed - 1, init_speed + 1]:
+        # Recurrence relation: If you can stop from any of the subproblems,
+        # you can also stop from the main problem
+        if can_stop_recursive_with_memo(runway, adjustedSpeed, start_index + adjustedSpeed, memo):
+            insert_into_memo(memo, start_index, init_speed, True)
+            return True
+    insert_into_memo(memo, start_index, init_speed, False)
+    return False
+
 
 if __name__ == '__main__':
     # test_min_levenshtein_distance()

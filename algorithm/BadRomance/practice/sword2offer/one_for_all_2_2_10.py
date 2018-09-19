@@ -255,7 +255,7 @@ class Fibonacci(object):
         return b
 
     # 一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法（先后次序不同算不同的结果）。
-    # 参数代表的意义略有不同，这里的number实际是指台阶的阶数，而相应对应的斐波那契数列中的 number+1项 也就是从叠加的次数为number
+    # 参数代表的意义略有不同，这里的number实际是指台阶的阶数，而相应对应的斐波那契数列中的 number+1项 也就是叠加的次数为number
     def jump_loor(self, number):
         # write code here
         if number == 0 or number == 1:
@@ -272,7 +272,7 @@ class Fibonacci(object):
     # F(n-1) = F(n-2) + F(n-3)... + F(0) ...(2)
     # (1)式-(2)式得F(n) - F(n-1) = F(n-1) 即 F(n) = 2 * F(n-1)  (n>=2)
     def abnormal_jump(self, number):
-        if number <=0:
+        if number <= 0:
             return 1
         if number == 1:
             return 1
