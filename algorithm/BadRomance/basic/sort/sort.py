@@ -155,32 +155,66 @@ class QucikSort(object):
         return left_ + equal + right_
 
     # 标准的快排实现
-    def partition(self, data, start, end):
+    def partition_std(self, data, start, end):
         # 要进行上下限的限制
         if start >= end:
             return
         index = start
         l = start + 1
         r = end
-        while l <= r:
+        while l < r:
 
             while data[l] < data[index] and l < end:
                 l += 1
-            while data[r] >= data[index] and r >start:
+            while data[r] > data[index] and r > start:
                 r -= 1
             data[l], data[r] = data[r], data[l]
 
-            l += 1
-            r -= 1
+            # l += 1
+            # r -= 1
 
         if l > end:
             l = end
         if r < start:
             r = start
-
+        data[l], data[r] = data[r], data[l]
         data[index], data[r] = data[r], data[index]
-        self.partition(data, start, r-1)
-        self.partition(data, r+1, end)
+        self.partition_std(data, start, r-1)
+        self.partition_std(data, r+1, end)
+
+    def quick_sort(self, array, left, right):
+        if left >= right:
+            return
+        low = left
+        high = right
+        key = array[low]
+        while left < right:
+            while left < right and array[right] > key:
+                right -= 1
+            array[left] = array[right]
+            while left < right and array[left] <= key:
+                left += 1
+            array[right] = array[left]
+        array[right] = key
+        self.quick_sort(array, low, left - 1)
+        self.quick_sort(array, left + 1, high)
+
+    # 算法导论实现
+    def quick_sort_into(self, array, l, r):
+        if l < r:
+            q = self.partition(array, l, r)
+            self.quick_sort_into(array, l, q - 1)
+            self.quick_sort_into(array, q + 1, r)
+
+    def partition(self, array, l, r):
+        x = array[r]
+        i = l - 1
+        for j in range(l, r):
+            if array[j] <= x:
+                i += 1
+                array[i], array[j] = array[j], array[i]
+        array[i + 1], array[r] = array[r], array[i + 1]
+        return i + 1
 
 
 
@@ -188,9 +222,10 @@ def test_quick_sort():
     qs = QucikSort()
     # data = [9, 3, 1, 2, 1, 9]
     data = [5, 3, 1, 9, 8, 2, 4, 7]
-    ret = qs.partition(data, 0, len(data)-1)
+    ret = qs.partition_std(data, 0, len(data)-1)
     print(data)
 
+# test_quick_sort()
 
 
 
@@ -278,9 +313,164 @@ class HeapSort(object):
         pass
 
 
+
+class SortSolution(object):
+
+    def __init__(self, ):
+        pass
+
+    def sort(self, nums):
+        """
+        original insert
+        :param nums:
+        :return:
+        """
+        # 从有序数组的第一个元素开始比较
+        # for r in range(1, len(nums)):
+        #     for l in range(r):
+        #         if nums[r] < nums[l]:
+        #             temp = nums[r]
+        #             nums[l+1: r+1] = nums[l: r]
+        #             nums[l] = temp
+        # 从有序数组的最后一个元素开始比较
+        for r in range(1, len(nums)):
+            key = nums[r]
+            for l in range(r-1, -1, -1):
+                if nums[l] > key:
+                    nums[l + 1] = nums[l]
+                    nums[l] = key
+
+    def sort(self, nums):
+        """
+        shell sort
+        :param nums:
+        :return:
+        """
+        pass
+
+    def sort(self, nums):
+        """
+        bubble sort
+        :param nums:
+        :return:
+        """
+        # for i in range(len(nums)):  # 先排最大
+        #     key = nums[0]
+        #     for j in range(1, len(nums)-i):
+        #         if key < nums[j]:
+        #             key = nums[j]
+        #         else:
+        #             nums[j], nums[j-1] = nums[j-1], nums[j]
+        # for i in range(len(nums)):  #  先排最小
+        #     for j in range(i+1, len(nums)):
+        #         if nums[i] > nums[j]:
+        #             nums[i], nums[j] = nums[j], nums[i]
+        for i in range(len(nums)-1):  #  先排最大
+            for j in range(len(nums)-i-1):
+                if nums[j] > nums[j+1]:
+                    nums[j+1], nums[j] = nums[j], nums[j+1]
+
+    def sort(self, nums):
+        """
+        select
+        :param nums:
+        :return:
+        """
+        for i in range(len(nums)-1):
+            mini = i
+            for j in range(i+1, len(nums)):
+                if nums[j] < nums[mini]:
+                    mini = j
+            nums[i], nums[mini] = nums[mini], nums[i]
+
+    def _merge(self, left, right):
+        l = 0
+        r = 0
+        ret = []
+        while l < len(left) and r < len(right):
+            if left[l] <= right[r]:
+                ret.append(left[l])
+                l += 1
+            else:
+                ret.append(right[r])
+                r += 1
+        while l < len(left):
+            ret.append(left[l])
+            l += 1
+        while r < len(right):
+            ret.append(right[r])
+            r += 1
+
+        return ret
+
+    def sort(self, nums):
+        """
+        merge sort
+        :param nums:
+        :return:
+        """
+        if len(nums) == 1:
+            return nums
+        mid = len(nums) // 2
+        left = self.sort(nums[:mid])
+        right = self.sort(nums[mid:])
+
+        return self._merge(left, right)
+
+
+
+    def sort(self, nums, start, end):
+        """
+        quick
+        :param nums:
+        :param start:
+        :param end:
+        :return:
+        """
+        if start < end:
+            piv_pos = self._partition(nums, start, end)
+            self.sort(nums, start, piv_pos-1)
+            self.sort(nums, piv_pos+1, end)
+
+    def _partition(self, nums, start, end):
+        position = start + 1
+        pivot_pos = start
+        for i in range(start+1, end+1):
+            if nums[i] < nums[pivot_pos]:
+                nums[position], nums[i] = nums[i], nums[position]
+                position += 1
+        position -= 1
+        nums[position], nums[pivot_pos] = nums[pivot_pos], nums[position]
+        return position
+
+    def sort(self, nums):
+        init_gap = len(nums) // 3
+        while init_gap > 0:
+            for i in range(init_gap, len(nums)):
+                maxi = i
+                for j in range(i, -1, -init_gap):
+                    if nums[i] < nums[j]:
+                        maxi = j
+                nums[i], nums[maxi] = nums[maxi], nums[i]
+
+            init_gap = init_gap // 2
+
+
+
+
+
+def test_sort():
+    ss = SortSolution()
+    nums = [9, 3, 1, 0, 1, 9]
+    # nums = [3,1, 2]
+    print(ss.sort(nums))
+    # print(ss.sort(nums, 0, len(nums)-1))
+    print(nums)
+
+
 if __name__ == '__main__':
     # sort = MergeSort()
     # data = [5, 1, 7, 2, 6, -3, 5, 7, -1]
     # print(sort.sort(data))
-    print('start')
-    test_quick_sort()
+    # print('start')
+    test_sort()

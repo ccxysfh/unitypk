@@ -102,5 +102,145 @@ def rabitss_in_forest(answers):
     return ret
 
 
+nums = [-1, 0, 1, 2, -1, -4]
+
+# nums = [-1, 0, 1]
+
+class ThreeSum(object):
+
+    def __init__(self, ):
+        pass
+
+    def three_sum(nums):
+        ret = []
+        for i in range(len(nums)):
+            for j in range(i+1, len(nums)):
+                curr = []
+                count = nums[i] + nums[j]
+                curr.append(nums[i])
+                curr.append(nums[j])
+                j += 1
+                while j < len(nums):
+                    count += nums[j]
+                    curr.append(nums[j])
+                    if count == 0 and len(curr) == 3:
+                        tag = True
+                        for item in ret:
+                            if set(item) == set(curr[:]):
+                                tag = False
+                                break
+                        if tag:
+                            ret.append(curr[:])
+                        curr.pop()
+                        count -= nums[j]
+                    elif len(curr) == 3:
+                        count -= nums[j]
+                        curr.pop()
+                    j += 1
+
+        return ret
+
+    def three_sum_2(self, nums):
+        lookup = {}
+        ret = set()
+        for i in nums:
+            if i not in lookup:
+                lookup[i] = 1
+            else:
+                lookup[i] += 1
+
+        if 0 in lookup and lookup[0] > 2:
+            ret.add((0, 0, 0))
+
+        pos = [i for i in nums if i > 0]
+        neg = [i for i in nums if i < 0]
+
+        for p in pos:
+            for n in neg:
+                i = -p-n
+                if i in lookup:
+                    if i == 0 and lookup[i] > 0:
+                        ret.add((n, i, p))
+                    elif i == p and lookup[i] > 1:
+                        ret.add((n, i, p))
+                    elif i == n and lookup[i] > 1:
+                        ret.add((n, i, p))
+                    elif i > p and lookup[i] > 0:
+                        ret.add((n, p, i))
+                    elif i < n and lookup[i] > 0:
+                        ret.add((i, n, p))
+        return list(map(list, ret))
+
+    def three_sum_3(self, nums):
+        if len(nums) < 3:
+            return []
+        nums.sort()
+        ret = set()
+        for i, x in enumerate(nums):
+            cache = {}
+            for y in nums[i+1:]:
+                if y not in cache:
+                    cache[-x-y] = 1
+                else:
+                    set.add((x, -x-y, y))
+        return list(map(list, ret))
+
+
+
+
+def test_three_sum():
+    solution = ThreeSum()
+    print(solution.three_sum_2(nums))
+
+
+
+# print(three_sum((nums)))
+
+class Solution:
+
+    def __init__(self, ):
+        self.mem = {}
+
+    def shoppingOffers(self, price, special, needs):
+        """
+        :type price: List[int]
+        :type special: List[List[int]]
+        :type needs: List[int]
+        :rtype: int
+        """
+
+        return self.method1(price, special, needs)
+
+    def cost_sum(self, price, needs):
+        cost = 0
+        for c, need in enumerate(needs):
+            cost += need * price[c]
+        return cost
+
+    def method1(self, price, special, needs):
+        if not price or not special or not needs:
+            return 0
+        cost = self.cost_sum(price, needs)
+        for s in special:
+            clone = needs[:]
+            for c in range(len(clone)):
+                if s[c] > clone[c]:
+                    break
+                clone[c] -= s[c]
+            if c == len(needs)-1:
+                cost = min(cost, s[-1] + self.method1(price, special, clone))
+        return cost
+
+def test():
+    so = Solution()
+    print(so.shoppingOffers([2,5], [[3,0,5],[1,2,10]], [3,2]))
+
+
+
+
+
+
+
 if __name__ == '__main__':
-    pass
+    # test_three_sum()
+    test()
