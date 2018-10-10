@@ -16,7 +16,7 @@ class LevenshteinDistance(object):
     def __init__(self, ):
         pass
 
-    def min_levenshtein_distance(self, a, b):
+    def min_levenshtein_distance(self, a, b):  # change a to b
         width = len(a) + 1  # column
         height = len(b) + 1  # row
         # 实例化python的矩阵确实麻烦
@@ -46,7 +46,7 @@ def test_min_levenshtein_distance():
     solution = LevenshteinDistance()
     print(solution.min_levenshtein_distance('ME', 'MY'))
     print(solution.min_levenshtein_distance('Saturday', 'Sunday'))
-
+# test_min_levenshtein_distance()
 
 # 币值最大化问题：一排硬币，原始位置互不相邻，总金额最大
 class MaxCash(object):
@@ -66,10 +66,9 @@ class MaxCash(object):
             return 0
         if n == 1:
             return coins[n - 1]
-        if n in cache:
-            return cache[n]
-        cache[n] = max(self.max_cash_top_cache(coins, n - 1, cache),
-                       self.max_cash_top_cache(coins, n - 2, cache) + coins[n - 1])
+        if n not in cache:
+            cache[n] = max(self.max_cash_top_cache(coins, n - 1, cache),
+                           self.max_cash_top_cache(coins, n - 2, cache) + coins[n - 1])
         return cache[n]
 
     def max_cash_botom_top(self, coins: list, n):
@@ -163,6 +162,7 @@ class RobotCoinCollect(object):
             coin_matrix[coin[0]][coin[1]] = 1
 
         count_coin = self._matrix(n, m)
+
         count_coin[0][0] = coin_matrix[0][0]
         for j in range(m):
             if j > 0:
@@ -204,7 +204,10 @@ def test_robot_collect_coins():
     print(solution.robot_coin_collect(5, 6, coins, path))
     print(path)
 
-
+"""
+以上是动态规划问题的三个基本案例，下面来看背包问题：
+n个给定物品中能够放进总重为w的背包的子集的最高价值以及最优子集本身
+"""
 class MFKnapsack(object):
 
     def __init__(self, weights: list, values: list):
@@ -218,14 +221,13 @@ class MFKnapsack(object):
             self.cache[key] = 0
             return 0
 
-        if key in self.cache:
-            return self.cache[key]
-        if self.weights[i - 1] > j:
-            self.cache[key] = self.mfk_napsack(i - 1, j)
+        if key not in self.cache:
+            if self.weights[i - 1] > j:
+                self.cache[key] = self.mfk_napsack(i - 1, j)
 
-        else:
-            self.cache[key] = max(self.mfk_napsack(i - 1, j),
-                                  self.mfk_napsack(i - 1, j - self.weights[i - 1]) + self.values[i - 1])
+            else:
+                self.cache[key] = max(self.mfk_napsack(i - 1, j),
+                                      self.mfk_napsack(i - 1, j - self.weights[i - 1]) + self.values[i - 1])
         return self.cache[key]
 
 
@@ -299,9 +301,14 @@ def can_stop_recursive_with_memo(runway, init_speed, start_index=0, memo=None):
     return False
 
 
+
+
 if __name__ == '__main__':
+    import os
     # test_min_levenshtein_distance()
     # test_max_cash_botom_top()
     # test_change_making()
     # test_robot_collect_coins()
-    test_mfk_napsack()
+    # test_mfk_napsack()
+    # test_method3()
+

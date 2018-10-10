@@ -24,18 +24,18 @@ def dfs(graph, visit, node):
 
 
 def main():
+    """
+    邻接矩阵法表示图
+    :return:
+    """
     graph = []
     visit = []
     k = int(input())
     count = 0
     while count < k:
         nodes_num, edge_nums = list(map(int, input().split(' ')))
-        for i in range(nodes_num):
-            row = []
-            visit.append(0)
-            for j in range(nodes_num):
-                row.append(0)
-            graph.append(row)
+        graph = [[0]*nodes_num for _ in range(nodes_num)]
+
 
         for i in range(edge_nums):
             edge = tuple(map(int, input().split(' ')))
